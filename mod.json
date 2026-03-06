@@ -21,6 +21,10 @@
 		]
 	},
 	"settings": {
+		"basic-title": {
+			"type": "title",
+			"name": "Basic Settings"
+		},
 		"quick-enable": {
 			"type": "bool",
 			"name": "Enabled",
@@ -44,6 +48,18 @@
 			"enable-if": "quick-enable",
 			"enable-if-description": "Please enable the mod :)",
 			"description": "Show the uncensored version of the SpaceUK reaction\n\n<co>(Contains profanity, may not be appropriate for all ages)</c>",
+			"default": false
+		},
+		"no-blank-title": {
+			"type": "title",
+			"name": "Enable/Disable reactions"
+		},
+		"no-normal": {
+			"type": "bool",
+			"name": "No Reaction On Normal Mode",
+			"enable-if": "quick-enable",
+			"enable-if-description": "Please enable the mod :)",
+			"description": "Do not play any reaction when playing on normal mode",
 			"default": false
 		},
 		"no-practice": {
