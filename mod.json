@@ -15,6 +15,7 @@
 		"geode.node-ids": ">=v1.20.0"
 	},
 	"tags": ["joke", "offline", "interface"],
+	"links": {"source": "https://github.com/xblazegmd/OMG"},
 	"resources": {
 		"files": [
 			"resources/*.mp3"
