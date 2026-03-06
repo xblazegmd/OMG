@@ -45,6 +45,22 @@
 			"enable-if-description": "Please enable the mod :)",
 			"description": "Show the uncensored version of the SpaceUK reaction\n\n<co>(Contains profanity, may not be appropriate for all ages)</c>",
 			"default": false
+		},
+		"no-practice": {
+			"type": "bool",
+			"name": "No Reaction On Practice",
+			"enable-if": "quick-enable",
+			"enable-if-description": "Please enable the mod :)",
+			"description": "Do not play any reaction when playing on practice mode",
+			"default": true
+		},
+		"no-startpos": {
+			"type": "bool",
+			"enable-if": "quick-enable",
+			"enable-if-description": "Please enable the mod :)",
+			"name": "No Reaction On Startpos",
+			"description": "Do not play any reaction when playing on a start position",
+			"default": true
 		}
 	}
 }

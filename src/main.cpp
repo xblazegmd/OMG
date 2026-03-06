@@ -17,8 +17,10 @@ class $modify(PLHook, PlayLayer) {
 
 	void playEndAnimationToPos(CCPoint position) {
 		PlayLayer::playEndAnimationToPos(position);
-		if (!Mod::get()->getSettingValue<bool>("quick-enable")) return;
-		if (m_isPracticeMode || m_isTestMode) return;
+		auto mod = Mod::get();
+		if (!mod->getSettingValue<bool>("quick-enable")) return;
+		if (mod->getSettingValue<bool>("no-practice") && m_isPracticeMode) return;
+		if (mod->getSettingValue<bool>("no-startpos") && m_isTestMode) return;
 
 		auto soundRes = getSound();
 		if (soundRes.isErr()) {
@@ -27,7 +29,7 @@ class $modify(PLHook, PlayLayer) {
 		}
 		FMOD::Sound* sound = soundRes.unwrap();
 		if (m_fields->m_engine->m_system->playSound(sound, nullptr, false, &m_fields->m_channel) == FMOD_OK) {
-			float volume = Mod::get()->getSettingValue<int64_t>("volume") / 200.f;
+			float volume = mod->getSettingValue<int64_t>("volume") / 200.f;
 			m_fields->m_channel->setVolume(volume);
 		}
 	}
