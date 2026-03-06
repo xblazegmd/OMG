@@ -38,6 +38,8 @@
 			"name": "Volume",
 			"description": "The volume for the reaction\n\n<cr>Some reactions are significantly louder than others, so be careful!</c>",
 			"default": 50,
+			"min": 0,
+			"max": 100,
 			"control": {
 				"slider": true
 			}
