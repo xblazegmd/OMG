@@ -50,7 +50,8 @@ class $modify(PLHook, PlayLayer) {
 			"cuatrocientos-flamewall.mp3",
 			"doggie-silentclubstep.mp3",
 			"glow-unsaryneverclear.mp3",
-			"cold-rupture.mp3"
+			"cold-rupture.mp3",
+			"nebnoob-unzodiac.mp3"
 		};
 		std::random_device rd;
 		std::mt19937 rng(rd());

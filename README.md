@@ -14,6 +14,7 @@ The following reactions are included
 - Doggie's completion of [Silent Clubstep](https://youtu.be/WWCPL7MGbEA?si=B3JtwjWJpkbGDnEw)
 - Glow's completion of [Unnerfed Sary Never Clear](https://youtu.be/Hpo77uVq75M)
 - Cold's completion of [Rupture](https://youtu.be/kNDpLgaQQqk)
+- nebnoob's completion of [Unnerfed Zodiac](https://youtu.be/3mvddPaNklg)
 
 ### Credits
 - sSevcon for the original mod idea (originally just the Npesta reaction)
