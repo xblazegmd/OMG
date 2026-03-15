@@ -35,30 +35,14 @@ class $modify(PLHook, PlayLayer) {
 		}
 	}
 
-	inline std::string getSpaceUKSlaughterhouse() {
-		return Mod::get()->getSettingValue<bool>("swearuk") ? "swearuk-slaughterhouse.mp3" : "spaceuk-slaughterhouse.mp3";
-	}
-
 	Result<FMOD::Sound*> getSound() {
-		std::vector<std::string> options{
-			"npesta-kenos.mp3",
-			"riot-bloodbath.mp3",
-			"knobbelboy-bloodlust.mp3",
-			"kingsammelot-nhelv.mp3",
-			"zoink-ts2.mp3",
-			getSpaceUKSlaughterhouse(),
-			"cuatrocientos-flamewall.mp3",
-			"doggie-silentclubstep.mp3",
-			"glow-unsaryneverclear.mp3",
-			"cold-rupture.mp3",
-			"nebnoob-unzodiac.mp3"
-		};
-		std::random_device rd;
-		std::mt19937 rng(rd());
-		std::uniform_int_distribution<> dist(0, options.size() - 1);
+		auto file = getReactionPath();
+		if (file.isErr()) {
+			log::error("Please report this issue to the OMG! developer");
+			return Err("{}", file.unwrapErr());
+		}
 
-		std::string file = options[dist(rng)];
-		auto path = Mod::get()->getResourcesDir() / file;
+		auto path = Mod::get()->getResourcesDir() / file.unwrap();
 
 		FMOD::Sound* ret;
 		FMOD_RESULT res = m_fields->m_engine->m_system->createSound(
@@ -74,6 +58,63 @@ class $modify(PLHook, PlayLayer) {
 		}
 
 		return Ok(ret);
+	}
+
+	inline std::string getSpaceUKSlaughterhouse() {
+		return Mod::get()->getSettingValue<bool>("swearuk") ? "swearuk-slaughterhouse.mp3" : "spaceuk-slaughterhouse.mp3";
+	}
+
+	Result<std::filesystem::path> getReactionPath() {
+		std::vector<std::string> options{
+			"npesta-kenos.mp3",
+			"riot-bloodbath.mp3",
+			"knobbelboy-bloodlust.mp3",
+			"kingsammelot-nhelv.mp3",
+			"zoink-ts2.mp3",
+			getSpaceUKSlaughterhouse(),
+			"cuatrocientos-flamewall.mp3",
+			"doggie-silentclubstep.mp3",
+			"glow-unsaryneverclear.mp3",
+			"cold-rupture.mp3",
+			"nebnoob-unzodiac.mp3"
+		};
+
+		std::string file;
+
+		// Wonderful if-else chain ;-;
+		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
+		if (reaction == "Random") {
+			std::random_device rd;
+			std::mt19937 rng(rd());
+			std::uniform_int_distribution<> dist(0, options.size() - 1);
+			file = options[dist(rng)];
+		} else if (reaction == "Kenos (Npesta)") {
+			file = options[0];
+		} else if (reaction == "Bloodbath (Riot)") {
+			file = options[1];
+		} else if (reaction == "Bloodlust (Knobbelboy)") {
+			file = options[2];
+		} else if (reaction == "Nhelv (Kingsammelot)") {
+			file = options[3];
+		} else if (reaction == "Thinking Space II (Zoink)") {
+			file = options[4];
+		} else if (reaction == "Slaugherhouse (SpaceUK's \"completion\")") {
+			file = options[5];
+		} else if (reaction == "Flamewall (Cuatrocientos)") {
+			file = options[6];
+		} else if (reaction == "Silent Clubstep (Doggie)") {
+			file = options[7];
+		} else if (reaction == "Unnerfed Sary Never Clear (Glow)") {
+			file = options[8];
+		} else if (reaction == "Rupture (Cold)") {
+			file = options[9];
+		} else if (reaction == "Unnerfed Zodiac (nebnoob)") {
+			file = options[10];
+		} else {
+			return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction); // SHOULD BE UNREACHABLE
+		}
+
+		return Ok(Mod::get()->getResourcesDir() / file);
 	}
 
 	void stopSound() {

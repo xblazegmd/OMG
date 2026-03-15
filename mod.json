@@ -45,6 +45,25 @@
 				"slider": true
 			}
 		},
+		"reaction": {
+			"type": "string",
+			"name": "Reaction",
+			"default": "Random",
+			"one-of": [
+				"Random",
+				"Kenos (Npesta)",
+				"Bloodbath (Riot)",
+				"Bloodlust (Knobbelboy)",
+				"Nhelv (Kingsammelot)",
+				"Thinking Space II (Zoink)",
+				"Slaugherhouse (SpaceUK's \"completion\")",
+				"Flamewall (Cuatrocientos)",
+				"Silent Clubstep (Doggie)",
+				"Unnerfed Sary Never Clear (Glow)",
+				"Rupture (Cold)",
+				"Unnerfed Zodiac (nebnoob)"
+			]
+		},
 		"swearuk": {
 			"type": "bool",
 			"name": "SwearUK",
