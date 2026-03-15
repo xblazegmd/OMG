@@ -3,18 +3,11 @@
 #include <Geode/fmod/fmod.h>
 #include <Geode/fmod/fmod_errors.h>
 #include <Geode/modify/PlayLayer.hpp>
-#include <filesystem>
 #include <random>
 #include <string>
 #include <vector>
 
 using namespace geode::prelude;
-
-$execute {
-	if (std::filesystem::create_directory(Mod::get()->getConfigDir() / "custom_reactions")) {
-		log::info("Created config directory");
-	}
-}
 
 class $modify(PLHook, PlayLayer) {
 	struct Fields {
@@ -47,34 +40,25 @@ class $modify(PLHook, PlayLayer) {
 	}
 
 	Result<FMOD::Sound*> getSound() {
-		auto resources = Mod::get()->getResourcesDir();
-		auto config = Mod::get()->getConfigDir() / "custom_reactions";
-
-		std::vector<std::filesystem::path> options{
-			resources /	"npesta-kenos.mp3",
-			resources /	"riot-bloodbath.mp3",
-			resources /	"knobbelboy-bloodlust.mp3",
-			resources /	"kingsammelot-nhelv.mp3",
-			resources /	"zoink-ts2.mp3",
-			resources /	getSpaceUKSlaughterhouse(),
-			resources /	"cuatrocientos-flamewall.mp3",
-			resources /	"doggie-silentclubstep.mp3",
-			resources /	"glow-unsaryneverclear.mp3",
-			resources /	"cold-rupture.mp3",
-			resources / "nebnoob-unzodiac.mp3"
+		std::vector<std::string> options{
+			"npesta-kenos.mp3",
+			"riot-bloodbath.mp3",
+			"knobbelboy-bloodlust.mp3",
+			"kingsammelot-nhelv.mp3",
+			"zoink-ts2.mp3",
+			getSpaceUKSlaughterhouse(),
+			"cuatrocientos-flamewall.mp3",
+			"doggie-silentclubstep.mp3",
+			"glow-unsaryneverclear.mp3",
+			"cold-rupture.mp3",
+			"nebnoob-unzodiac.mp3"
 		};
-
-		for (const auto& file : std::filesystem::directory_iterator(config)) {
-			if (file.is_regular_file() && file.path().extension() == ".mp3") {
-				options.push_back(file.path());
-			}
-		}
-
 		std::random_device rd;
 		std::mt19937 rng(rd());
 		std::uniform_int_distribution<> dist(0, options.size() - 1);
 
-		auto path = options[dist(rng)];
+		std::string file = options[dist(rng)];
+		auto path = Mod::get()->getResourcesDir() / file;
 
 		FMOD::Sound* ret;
 		FMOD_RESULT res = m_fields->m_engine->m_system->createSound(
@@ -85,7 +69,7 @@ class $modify(PLHook, PlayLayer) {
 		);
 		if (res != FMOD_OK) {
 			return Err(
-				"Could not make sound for '{}': {} (0x{:02X})", path, FMOD_ErrorString(res), (int)res
+				"Could not make sound for '{}': {} (0x{:02X})", file, FMOD_ErrorString(res), (int)res
 			);
 		}
 
