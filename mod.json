@@ -48,6 +48,8 @@
 		"reaction": {
 			"type": "string",
 			"name": "Reaction",
+			"enable-if": "quick-enable",
+			"enable-if-description": "Please enable the mod :)",
 			"default": "Random",
 			"one-of": [
 				"Random",
