@@ -63,5 +63,7 @@ build-*/
 .idea/
 /cmake-build-*/
 
+# Other stuff
 **.af
 **.af~lock~
+**.sh
