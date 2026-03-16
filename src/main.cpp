@@ -30,6 +30,18 @@ class $modify(PLHook, PlayLayer) {
 
 	void playEndAnimationToPos(CCPoint position) {
 		PlayLayer::playEndAnimationToPos(position);
+		playSound();
+	}
+
+	// I looooove end triggers... yeah...
+	void levelComplete() {
+		PlayLayer::levelComplete();
+		if (!m_fields->m_channel) {
+			playSound();
+		}
+	}
+
+	void playSound() {
 		auto mod = Mod::get();
 		if (!mod->getSettingValue<bool>("quick-enable")) return;
 		if (mod->getSettingValue<bool>("no-practice") && m_isPracticeMode) return;

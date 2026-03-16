@@ -1,6 +1,7 @@
 # 1.2.0
 - Add ability to use a specific reaction instead of a random one
 - Normalized reaction volume and made them louder (plz turn down your volume)
+- Fix reactions not working with end triggers
 
 # 1.1.0
 - Add __nebnoob's__ verification of [Unnerfed Zodiac](https://youtu.be/3mvddPaNklg)
