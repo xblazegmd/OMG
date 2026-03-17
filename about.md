@@ -13,6 +13,11 @@ The following reactions are included
 - __Glow's__ completion of __[Unnerfed Sary Never Clear](https://youtu.be/Hpo77uVq75M)__
 - __Cold's__ completion of __[Rupture](https://youtu.be/kNDpLgaQQqk)__
 - __nebnoob's__ completion of __[Unnerfed Zodiac](https://youtu.be/3mvddPaNklg)__
+- __Zoink's__ completion of __[Orbit](https://youtu.be/QKcv8DkNPd0?si=OJdK0ou-j5u4SI0g)__
+- __Kingsammelot's__ completion of __[Artificial Ascent](https://www.youtube.com/watch?v=q8f7yzvM8EQ)__
+- __Npesta's__ completion of __[Deimos (EndLevel)](https://www.youtube.com/watch?v=FgxsNzQnF5o)__
+- __AeonAir's__ completion of __[Tartarus](https://www.youtube.com/watch?v=areGj_ppaYo)__
+- __Npesta's__ completion of __[WOW](https://www.youtube.com/watch?v=CbUVw7p0Ebg)__
 
 ### Credits
 - [sSevcon](user:24373814) for the original mod idea (originally just the Npesta reaction)

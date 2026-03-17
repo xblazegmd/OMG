@@ -63,7 +63,12 @@
 				"Silent Clubstep (Doggie)",
 				"Unnerfed Sary Never Clear (Glow)",
 				"Rupture (Cold)",
-				"Unnerfed Zodiac (nebnoob)"
+				"Unnerfed Zodiac (nebnoob)",
+				"Orbit (Zoink)",
+				"Artificial Ascent (Kingsammelot)",
+				"Deimos (Npesta)",
+				"Tartarus (AeonAir)",
+				"WOW (Npesta)"
 			]
 		},
 		"swearuk": {
@@ -71,7 +76,7 @@
 			"name": "SwearUK",
 			"enable-if": "quick-enable",
 			"enable-if-description": "Please enable the mod :)",
-			"description": "Show the uncensored version of the SpaceUK reaction\n\n<co>(Contains profanity, may not be appropriate for all ages)</c>",
+			"description": "Show the uncensored version of all the reactions\n\n<co>(Contains profanity, may not be appropriate for all ages)</c>",
 			"default": false
 		},
 		"no-blank-title": {

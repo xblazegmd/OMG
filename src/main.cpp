@@ -105,7 +105,12 @@ class $modify(PLHook, PlayLayer) {
 			"doggie-silentclubstep.mp3",
 			"glow-unsaryneverclear.mp3",
 			"cold-rupture.mp3",
-			"nebnoob-unzodiac.mp3"
+			"nebnoob-unzodiac.mp3",
+			getNormalOrSwear("zoink", "swoink", "orbit"), // W swoink
+			"kingsammelot-artificialascent.mp3",
+			getNormalOrSwear("npesta", "swearpesta", "deimos"),
+			"aeonair-tartarus.mp3",
+			"npesta-wow.mp3"
 		};
 
 		std::string file;
@@ -139,6 +144,16 @@ class $modify(PLHook, PlayLayer) {
 			file = options[9];
 		} else if (reaction == "Unnerfed Zodiac (nebnoob)") {
 			file = options[10];
+		} else if (reaction == "Orbit (Zoink)") {
+			file = options[11];
+		} else if (reaction == "Artificial Ascent (Kingsammelot)") {
+			file = options[12];
+		} else if (reaction == "Deimos (Npesta)") {
+			file = options[13];
+		} else if (reaction == "Tartarus (AeonAir)") {
+			file = options[14];
+		} else if (reaction == "WOW (Npesta)") {
+			file = options[15];
 		} else {
 			return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction); // SHOULD BE UNREACHABLE
 		}
