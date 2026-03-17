@@ -85,8 +85,12 @@ class $modify(PLHook, PlayLayer) {
 		return Ok(ret);
 	}
 
-	inline std::string getSpaceUKSlaughterhouse() {
-		return Mod::get()->getSettingValue<bool>("swearuk") ? "swearuk-slaughterhouse.mp3" : "spaceuk-slaughterhouse.mp3";
+	inline std::string getNormalOrSwear(
+		const std::string& normal,
+		const std::string& swear,
+		const std::string& level
+	) {
+		return fmt::format("{}-{}.mp3", Mod::get()->getSettingValue<bool>("swearuk") ? swear : normal, level);
 	}
 
 	Result<std::filesystem::path> getReactionPath() {
@@ -96,7 +100,7 @@ class $modify(PLHook, PlayLayer) {
 			"knobbelboy-bloodlust.mp3",
 			"kingsammelot-nhelv.mp3",
 			"zoink-ts2.mp3",
-			getSpaceUKSlaughterhouse(),
+			getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse"),
 			"cuatrocientos-flamewall.mp3",
 			"doggie-silentclubstep.mp3",
 			"glow-unsaryneverclear.mp3",
