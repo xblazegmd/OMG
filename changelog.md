@@ -1,3 +1,7 @@
+# 1.3.0
+- Add option to disable the reactions on platformer
+- Make end trigger support better
+
 # 1.2.0
 - Add __Zoink's__ completion of [Orbit](https://youtu.be/QKcv8DkNPd0?si=OJdK0ou-j5u4SI0g)
 - Add __Kingsammelot's__ completion of [Artificial Ascent](https://www.youtube.com/watch?v=q8f7yzvM8EQ)

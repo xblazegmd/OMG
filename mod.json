@@ -91,6 +91,14 @@
 			"description": "Do not play any reaction when playing on normal mode",
 			"default": false
 		},
+		"no-platformer": {
+			"type": "bool",
+			"enable-if": "quick-enable",
+			"enable-if-description": "Please enable the mod :)",
+			"name": "No Reaction on Platformer Mode",
+			"description": "Do not play any reaction while on platformer",
+			"default": false
+		},
 		"no-practice": {
 			"type": "bool",
 			"name": "No Reaction On Practice",

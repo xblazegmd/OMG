@@ -44,6 +44,7 @@ class $modify(PLHook, PlayLayer) {
 		if (mod->getSettingValue<bool>("no-practice") && m_isPracticeMode) return;
 		if (mod->getSettingValue<bool>("no-startpos") && m_isTestMode) return;
 		if (mod->getSettingValue<bool>("no-normal") && !m_isPracticeMode && !m_isTestMode) return;
+		if (mod->getSettingValue<bool>("no-platformer") && m_isPlatformer) return;
 
 		auto soundRes = getSound();
 		if (soundRes.isErr()) {
