@@ -33,9 +33,8 @@ class $modify(PLHook, PlayLayer) {
 		playSound();
 	}
 
-	// I looooove end triggers... yeah...
-	void levelComplete() {
-		PlayLayer::levelComplete();
+	void playPlatformerEndAnimationToPos(CCPoint position, bool instant) {
+		PlayLayer::playPlatformerEndAnimationToPos(position, instant);
 		if (!m_fields->m_channel) {
 			playSound();
 		}
