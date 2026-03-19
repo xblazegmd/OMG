@@ -35,9 +35,7 @@ class $modify(PLHook, PlayLayer) {
 
 	void playPlatformerEndAnimationToPos(CCPoint position, bool instant) {
 		PlayLayer::playPlatformerEndAnimationToPos(position, instant);
-		if (!m_fields->m_channel) {
-			playSound();
-		}
+		playSound();
 	}
 
 	void playSound() {
