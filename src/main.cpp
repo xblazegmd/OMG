@@ -9,19 +9,6 @@
 
 using namespace geode::prelude;
 
-$on_game(Loaded) {
-	if (
-		!Mod::get()->setSavedValue("notified", true) &&
-		Mod::get()->getSettingValue<int64_t>("volume") > 50
-	) {
-		FLAlertLayer::create(
-			"OMG! Notice",
-			"All reactions are now <cr>louder</c>. Please turn down your <co>volume</c> (you can do so in the mod's settings)",
-			"OK"
-		)->show();
-	}
-}
-
 class $modify(PLHook, PlayLayer) {
 	struct Fields {
 		FMODAudioEngine* m_engine = FMODAudioEngine::sharedEngine();
