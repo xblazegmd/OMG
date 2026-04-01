@@ -1,6 +1,6 @@
 <img src="logo.png" width="80" />
 
-# OMG!
+# OMG! (April Fools 2026 version)
 Play some of the most iconic reactions in GD when beating a level!
 
 The following reactions are included
