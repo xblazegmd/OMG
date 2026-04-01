@@ -1,13 +1,22 @@
 #include <Geode/Geode.hpp>
+#include <Geode/modify/PlayLayer.hpp>
+#include <Geode/utils/file.hpp>
 #include <Geode/utils/string.hpp>
 #include <Geode/fmod/fmod.h>
 #include <Geode/fmod/fmod_errors.h>
-#include <Geode/modify/PlayLayer.hpp>
+#include <filesystem>
 #include <random>
 #include <string>
+#include <system_error>
 #include <vector>
 
 using namespace geode::prelude;
+
+$execute {
+	if (!std::filesystem::exists(Mod::get()->getConfigDir() / "reactions")) {
+		(void)file::createDirectory(Mod::get()->getConfigDir() / "reactions");
+	}
+}
 
 class $modify(PLHook, PlayLayer) {
 	struct Fields {
@@ -48,7 +57,6 @@ class $modify(PLHook, PlayLayer) {
 	Result<FMOD::Sound*> getSound() {
 		auto file = getReactionPath();
 		if (file.isErr()) {
-			log::error("Please report this issue to the OMG! developer");
 			return Err("{}", file.unwrapErr());
 		}
 
@@ -78,6 +86,13 @@ class $modify(PLHook, PlayLayer) {
 		return fmt::format("{}-{}.mp3", Mod::get()->getSettingValue<bool>("swearuk") ? swear : normal, level);
 	}
 
+	int randint(int a, int b) {
+		static std::random_device rd;
+		static std::mt19937 rng(rd());
+		std::uniform_int_distribution<> dist(a, b);
+		return dist(rng);
+	}
+
 	Result<std::filesystem::path> getReactionPath() {
 		std::vector<std::string> options{
 			"npesta-kenos.mp3",
@@ -103,10 +118,16 @@ class $modify(PLHook, PlayLayer) {
 		// Wonderful if-else chain ;-;
 		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
 		if (reaction == "Random") {
-			std::random_device rd;
-			std::mt19937 rng(rd());
-			std::uniform_int_distribution<> dist(0, options.size() - 1);
-			file = options[dist(rng)];
+			file = options[randint(0, options.size() - 1)];
+		} else if (reaction == "Random (With Customs)") {
+			// I am overthinking this code a lot so for my sanity ima leave it alone
+			// If it works it works
+			int i = randint(0, options.size()); // No "- 1" to add an extra posibility for the custom reactions
+			if (i >= options.size()) {
+				return getCustomReaction();
+			} else {
+				file = options[i];
+			}
 		} else if (reaction == "Kenos (Npesta)") {
 			file = options[0];
 		} else if (reaction == "Bloodbath (Riot)") {
@@ -139,11 +160,50 @@ class $modify(PLHook, PlayLayer) {
 			file = options[14];
 		} else if (reaction == "WOW (Npesta)") {
 			file = options[15];
+		} else if (reaction == "Custom") {
+			return getCustomReaction();
 		} else {
+			log::error("Please report this issue to the OMG! developer");
 			return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction); // SHOULD BE UNREACHABLE
 		}
 
 		return Ok(Mod::get()->getResourcesDir() / file);
+	}
+
+	Result<std::filesystem::path> getCustomReaction() {
+		auto reactionsPath = Mod::get()->getConfigDir() / "reactions";
+
+		std::error_code err;
+		if (!std::filesystem::exists(reactionsPath, err) || err) {
+			return Err("There is no custom reactions");
+		}
+		if (!std::filesystem::is_directory(reactionsPath, err) || err) {
+			return Err("Excuse me did you just make the reactions folder a file?");
+		}
+		if (std::filesystem::is_empty(reactionsPath, err) || err) {
+			return Err("There is no custom reactions");
+		}
+
+		auto filesRes = file::readDirectory(reactionsPath);
+
+		// All errors 'readDirectory' gives should have already been handled before in the function
+		// But because I love overthinking I'm adding this just-in-case check
+		if (filesRes.isErr()) {
+			return Err("{}", filesRes.unwrapErr());
+		}
+
+		auto files = filesRes.unwrap();
+
+		// Remove anything that isn't an audio file
+		std::erase_if(files, [](const auto& file) {
+			return !std::filesystem::is_regular_file(file) || (file.extension() != ".mp3" && file.extension() != ".ogg");
+		});
+		if (files.empty()) {
+			return Err("There is no custom reactions");
+		}
+
+		// Return random file
+		return Ok(files[randint(0, files.size() - 1)]);
 	}
 
 	void stopSound() {

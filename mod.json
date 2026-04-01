@@ -48,11 +48,13 @@
 		"reaction": {
 			"type": "string",
 			"name": "Reaction",
+			"description": "Select whether you want a specific reaction or a random one.\n\nYou can also choose whether you want to use a <cc>custom reaction</c>",
 			"enable-if": "quick-enable",
 			"enable-if-description": "Please enable the mod :)",
 			"default": "Random",
 			"one-of": [
 				"Random",
+				"Random (With Customs)",
 				"Kenos (Npesta)",
 				"Bloodbath (Riot)",
 				"Bloodlust (Knobbelboy)",
@@ -68,7 +70,8 @@
 				"Artificial Ascent (Kingsammelot)",
 				"Deimos (Npesta)",
 				"Tartarus (AeonAir)",
-				"WOW (Npesta)"
+				"WOW (Npesta)",
+				"Custom"
 			]
 		},
 		"swearuk": {
