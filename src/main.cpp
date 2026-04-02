@@ -176,6 +176,8 @@ class $modify(PLHook, PlayLayer) {
 			filePaths.push_back(custom.unwrap());
 
 			return Ok(filePaths[randint(0, filePaths.size() - 1)]);
+		} else if (reaction == "Custom") {
+			return getCustomReaction();
 		} else if (files.count(reaction)) {
 			return Ok(resources / files[reaction]);
 		} else {
