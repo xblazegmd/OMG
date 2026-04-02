@@ -7,16 +7,9 @@
 #include <filesystem>
 #include <random>
 #include <string>
-#include <system_error>
 #include <vector>
 
 using namespace geode::prelude;
-
-// $execute {
-// 	if (!std::filesystem::exists(Mod::get()->getConfigDir() / "reactions")) {
-// 		(void)file::createDirectory(Mod::get()->getConfigDir() / "reactions");
-// 	}
-// }
 
 class $modify(PLHook, PlayLayer) {
 	struct Fields {
