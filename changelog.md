@@ -5,7 +5,7 @@
 - Add option to preload sounds (this should hopefully fix any lag issues)
 - Add option to disable the reactions on platformer
 - Lots of internal refactors
-- Make end trigger support better
+- Use `playPlatformerEndAnimationToPos` instead of `levelComplete` for playing the reactions with end triggers
 
 # 1.2.1
 - wat
