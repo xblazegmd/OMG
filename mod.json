@@ -140,7 +140,7 @@
 		"preload-sounds": {
 			"type": "bool",
 			"name": "Preload Sounds",
-			"description": "Try to preload all sounds when opening a level.\n\nDisabling this may reduce performance. Enabling this may increase memory usage",
+			"description": "Try to preload all sounds when opening a level.\n\nDisabling this may reduce performance. Enabling this may increase memory usage and level load times",
 			"default": true
 		}
 	}
