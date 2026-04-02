@@ -110,7 +110,8 @@ class $modify(PLHook, PlayLayer) {
 			"kingsammelot-artificialascent.mp3",
 			getNormalOrSwear("npesta", "swearpesta", "deimos"),
 			"aeonair-tartarus.mp3",
-			"npesta-wow.mp3"
+			"npesta-wow.mp3",
+			"kingsammelot-killbot.mp3"
 		};
 
 		std::string file;
@@ -174,6 +175,8 @@ class $modify(PLHook, PlayLayer) {
 			file = options[14];
 		} else if (reaction == "WOW (Npesta)") {
 			file = options[15];
+		} else if (reaction == "Killbot (Kingsammelot)") {
+			file = options[16];
 		} else {
 			log::error("Please report this issue to the OMG! developer");
 			return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction); // SHOULD BE UNREACHABLE

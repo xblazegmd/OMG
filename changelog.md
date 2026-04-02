@@ -1,6 +1,7 @@
 # 1.3.0
 - Add option to disable the reactions on platformer
 - Make end trigger support better
+- Add __Kingsammelot's__ completion of [Killbot](https://youtu.be/I1_yfoHOrbQ)
 
 # 1.2.0
 - Add __Zoink's__ completion of [Orbit](https://youtu.be/QKcv8DkNPd0?si=OJdK0ou-j5u4SI0g)
