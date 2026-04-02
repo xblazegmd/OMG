@@ -197,10 +197,8 @@ class $modify(PLHook, PlayLayer) {
 		}
 
 		auto filesRes = file::readDirectory(reactionsPath);
-
-		// All errors 'readDirectory' gives should have already been handled before in the function
-		// But because I love overthinking I'm adding this just-in-case check
 		if (filesRes.isErr()) {
+			// This should be unreachable, surely
 			return Err("{}", filesRes.unwrapErr());
 		}
 
@@ -213,7 +211,6 @@ class $modify(PLHook, PlayLayer) {
 		if (files.empty()) {
 			return Err("There is no custom reactions");
 		}
-
 		return Ok(files);
 	}
 
