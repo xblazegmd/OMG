@@ -119,14 +119,28 @@ class $modify(PLHook, PlayLayer) {
 		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
 		if (reaction == "Random") {
 			file = options[randint(0, options.size() - 1)];
-		} else if (reaction == "Random (With Customs)") {
-			// I am overthinking this code a lot so for my sanity ima leave it alone
-			// If it works it works
-			int i = randint(0, options.size()); // No "- 1" to add an extra posibility for the custom reactions
-			if (i >= options.size()) {
-				return getCustomReaction();
+		} else if (reaction == "Custom") {
+			auto customReactions = getCustomReactions();
+			if (customReactions.isErr()) {
+				return Err("Could not get custom reactions: {}", customReactions.unwrapErr());
 			} else {
-				file = options[i];
+				auto customs = customReactions.unwrap();
+				return Ok(customs[randint(0, customs.size() - 1)]);
+			}
+		} else if (reaction == "Random (With Customs)") {
+			std::vector<std::filesystem::path> files;
+			for (const auto& option : options) {
+				files.push_back(option);
+			}
+
+			auto customReactions = getCustomReactions();
+			if (customReactions.isErr()) {
+				return Err("Could not get custom reactions: {}", customReactions.unwrapErr());
+			} else {
+				for (const auto& reaction : customReactions.unwrap()) {
+					files.push_back(reaction);
+				}
+				return Ok(files[randint(0, files.size() - 1)]);
 			}
 		} else if (reaction == "Kenos (Npesta)") {
 			file = options[0];
@@ -160,8 +174,6 @@ class $modify(PLHook, PlayLayer) {
 			file = options[14];
 		} else if (reaction == "WOW (Npesta)") {
 			file = options[15];
-		} else if (reaction == "Custom") {
-			return getCustomReaction();
 		} else {
 			log::error("Please report this issue to the OMG! developer");
 			return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction); // SHOULD BE UNREACHABLE
@@ -170,7 +182,7 @@ class $modify(PLHook, PlayLayer) {
 		return Ok(Mod::get()->getResourcesDir() / file);
 	}
 
-	Result<std::filesystem::path> getCustomReaction() {
+	Result<std::vector<std::filesystem::path>> getCustomReactions() {
 		auto reactionsPath = Mod::get()->getConfigDir() / "reactions";
 
 		std::error_code err;
@@ -202,8 +214,7 @@ class $modify(PLHook, PlayLayer) {
 			return Err("There is no custom reactions");
 		}
 
-		// Return random file
-		return Ok(files[randint(0, files.size() - 1)]);
+		return Ok(files);
 	}
 
 	void stopSound() {
