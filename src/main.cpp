@@ -20,24 +20,7 @@ class $modify(PLHook, PlayLayer) {
 
 	void preloadSounds() {
 		m_fields->m_preloadedSounds.clear();
-		for (const auto& [key, file] : std::initializer_list<std::pair<std::string, std::string>>{
-			{"Kenos (Npesta)", 								"npesta-kenos.mp3"},
-			{"Bloodbath (Riot)", 							"riot-bloodbath.mp3"},
-			{"Bloodlust (Knobbelboy)", 						"knobbelboy-bloodlust.mp3"},
-			{"Nhelv (Kingsammelot)", 						"kingsammelot-nhelv.mp3"},
-			{"Thinking Space II", 							"zoink-ts2.mp3"},
-			{"Slaugherhouse (SpaceUK's \"completion\")", 	getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse")},
-			{"Silent Clubstep (Doggie)", 					"doggie-silentclubstep.mp3"},
-			{"Unnerfed Sary Never Clear (Glow)", 			"glow-unsaryneverclear.mp3"},
-			{"Rupture (Cold)", 								"cold-rupture.mp3"},
-			{"Unnerfed Zodiac (nebnoob)", 					"nebnoob-unzodiac.mp3"},
-			{"Orbit (Zoink)", 								getNormalOrSwear("zoink", "swoink", "orbit")},
-			{"Artificial Ascent (Kingsammelot)", 			"kingsammelot-artificialascent.mp3"},
-			{"Deimos (Npesta)", 							getNormalOrSwear("npesta", "swearpesta", "deimos")},
-			{"Tartarus (AeonAir)", 							"aeonair-tartarus.mp3"},
-			{"WOW (Npesta)", 								"npesta-wow.mp3"},
-			{"Killbot (Kingsammelot)", 						"kingsammelot-killbot.mp3"}
-		}) {
+		for (const auto& [key, file] : getFiles()) {
 			auto path = Mod::get()->getResourcesDir() / file;
 			auto sound = makeSound(string::pathToString(path).c_str());
 			if (sound.isErr()) {
@@ -116,7 +99,7 @@ class $modify(PLHook, PlayLayer) {
 		}
 	}
 
-	Result<FMOD::Sound*> getSound() {
+	inline Result<FMOD::Sound*> getSound() {
 		auto file = getReactionPath();
 		if (file.isErr()) {
 			return Err("{}", file.unwrapErr());
@@ -148,10 +131,8 @@ class $modify(PLHook, PlayLayer) {
 			return Ok(it->second);
 		}
 
-		for (const auto& [key, sound] : m_fields->m_preloadedSounds) {
-			if (key == reaction) {
-				return Ok(sound);
-			}
+		if (m_fields->m_preloadedSounds.count(reaction)) {
+			return Ok(m_fields->m_preloadedSounds[reaction]);
 		}
 
 		// This should be unreachable so if we reach this, it's definitely a bug
@@ -173,12 +154,64 @@ class $modify(PLHook, PlayLayer) {
 		return Ok(ret);
 	}
 
+	Result<std::filesystem::path> getReactionPath() {
+		auto resources = Mod::get()->getResourcesDir();
+		auto files = getFiles();
+
+		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
+		if (reaction == "Random") {
+			auto it = files.begin();
+			std::advance(it, randint(0, files.size() - 1));
+			return Ok(resources / it->second);
+		} else if (reaction == "Random (With Custom)") {
+			std::vector<std::filesystem::path> filePaths;
+			for (const auto& [_, file] : files) {
+				filePaths.push_back(Mod::get()->getResourcesDir() / file);
+			}
+
+			auto custom = getCustomReaction();
+			if (custom.isErr()) {
+				return Err("Could not get custom reactions: {}", custom.unwrapErr());
+			}
+			filePaths.push_back(custom.unwrap());
+
+			return Ok(filePaths[randint(0, filePaths.size() - 1)]);
+		} else if (files.count(reaction)) {
+			return Ok(resources / files[reaction]);
+		} else {
+			// This should be unreachable so if we reach this, it's definitely a bug
+			log::error("Please report this issue to the OMG! developer");
+			return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction);
+		}
+	}
+
 	inline std::string getNormalOrSwear(
 		const std::string& normal,
 		const std::string& swear,
 		const std::string& level
 	) {
 		return fmt::format("{}-{}.mp3", Mod::get()->getSettingValue<bool>("swearuk") ? swear : normal, level);
+	}
+
+	inline utils::StringMap<std::string> getFiles() {
+		return {
+			{"Kenos (Npesta)", 								"npesta-kenos.mp3"},
+			{"Bloodbath (Riot)", 							"riot-bloodbath.mp3"},
+			{"Bloodlust (Knobbelboy)", 						"knobbelboy-bloodlust.mp3"},
+			{"Nhelv (Kingsammelot)", 						"kingsammelot-nhelv.mp3"},
+			{"Thinking Space II", 							"zoink-ts2.mp3"},
+			{"Slaugherhouse (SpaceUK's \"completion\")", 	getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse")},
+			{"Silent Clubstep (Doggie)", 					"doggie-silentclubstep.mp3"},
+			{"Unnerfed Sary Never Clear (Glow)", 			"glow-unsaryneverclear.mp3"},
+			{"Rupture (Cold)", 								"cold-rupture.mp3"},
+			{"Unnerfed Zodiac (nebnoob)", 					"nebnoob-unzodiac.mp3"},
+			{"Orbit (Zoink)", 								getNormalOrSwear("zoink", "swoink", "orbit")},
+			{"Artificial Ascent (Kingsammelot)", 			"kingsammelot-artificialascent.mp3"},
+			{"Deimos (Npesta)", 							getNormalOrSwear("npesta", "swearpesta", "deimos")},
+			{"Tartarus (AeonAir)", 							"aeonair-tartarus.mp3"},
+			{"WOW (Npesta)", 								"npesta-wow.mp3"},
+			{"Killbot (Kingsammelot)", 						"kingsammelot-killbot.mp3"}
+		};
 	}
 
 	int randint(int a, int b) {
@@ -194,90 +227,6 @@ class $modify(PLHook, PlayLayer) {
 			return Err("The custom reaction's file was not found");
 		}
 		return Ok(reaction);
-	}
-
-	Result<std::filesystem::path> getReactionPath() {
-		std::vector<std::string> options{
-			"npesta-kenos.mp3",
-			"riot-bloodbath.mp3",
-			"knobbelboy-bloodlust.mp3",
-			"kingsammelot-nhelv.mp3",
-			"zoink-ts2.mp3",
-			getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse"),
-			"cuatrocientos-flamewall.mp3",
-			"doggie-silentclubstep.mp3",
-			"glow-unsaryneverclear.mp3",
-			"cold-rupture.mp3",
-			"nebnoob-unzodiac.mp3",
-			getNormalOrSwear("zoink", "swoink", "orbit"), // W swoink
-			"kingsammelot-artificialascent.mp3",
-			getNormalOrSwear("npesta", "swearpesta", "deimos"),
-			"aeonair-tartarus.mp3",
-			"npesta-wow.mp3",
-			"kingsammelot-killbot.mp3"
-		};
-
-		std::string file;
-
-		// Wonderful if-else chain ;-;
-		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
-		if (reaction == "Random") {
-			file = options[randint(0, options.size() - 1)];
-		} else if (reaction == "Custom") {
-			return getCustomReaction();
-		} else if (reaction == "Random (With Custom)") {
-			std::vector<std::filesystem::path> files;
-			for (const auto& option : options) {
-				files.push_back(option);
-			}
-
-			auto custom = getCustomReaction();
-			if (custom.isErr()) {
-				return Err("Could not get custom reactions: {}", custom.unwrapErr());
-			}
-			files.push_back(custom.unwrap());
-
-			return Ok(files[randint(0, files.size() - 1)]);
-		} else if (reaction == "Kenos (Npesta)") {
-			file = options[0];
-		} else if (reaction == "Bloodbath (Riot)") {
-			file = options[1];
-		} else if (reaction == "Bloodlust (Knobbelboy)") {
-			file = options[2];
-		} else if (reaction == "Nhelv (Kingsammelot)") {
-			file = options[3];
-		} else if (reaction == "Thinking Space II (Zoink)") {
-			file = options[4];
-		} else if (reaction == "Slaugherhouse (SpaceUK's \"completion\")") {
-			file = options[5];
-		} else if (reaction == "Flamewall (Cuatrocientos)") {
-			file = options[6];
-		} else if (reaction == "Silent Clubstep (Doggie)") {
-			file = options[7];
-		} else if (reaction == "Unnerfed Sary Never Clear (Glow)") {
-			file = options[8];
-		} else if (reaction == "Rupture (Cold)") {
-			file = options[9];
-		} else if (reaction == "Unnerfed Zodiac (nebnoob)") {
-			file = options[10];
-		} else if (reaction == "Orbit (Zoink)") {
-			file = options[11];
-		} else if (reaction == "Artificial Ascent (Kingsammelot)") {
-			file = options[12];
-		} else if (reaction == "Deimos (Npesta)") {
-			file = options[13];
-		} else if (reaction == "Tartarus (AeonAir)") {
-			file = options[14];
-		} else if (reaction == "WOW (Npesta)") {
-			file = options[15];
-		} else if (reaction == "Killbot (Kingsammelot)") {
-			file = options[16];
-		} else {
-			log::error("Please report this issue to the OMG! developer");
-			return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction); // SHOULD BE UNREACHABLE
-		}
-
-		return Ok(Mod::get()->getResourcesDir() / file);
 	}
 
 	void stopSound() {

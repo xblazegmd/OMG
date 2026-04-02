@@ -4,6 +4,7 @@
 - Add Custom Reactions
 - Add option to preload sounds (this should hopefully fix any lag issues)
 - Add option to disable the reactions on platformer
+- Lots of internal refactors
 - Make end trigger support better
 
 # 1.2.1
