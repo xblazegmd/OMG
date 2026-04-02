@@ -15,7 +15,65 @@ class $modify(PLHook, PlayLayer) {
 	struct Fields {
 		FMODAudioEngine* m_engine = FMODAudioEngine::sharedEngine();
 		FMOD::Channel* m_channel;
+		utils::StringMap<FMOD::Sound*> m_preloadedSounds;
 	};
+
+	void preloadSounds() {
+		m_fields->m_preloadedSounds.clear();
+		for (const auto& [key, file] : std::initializer_list<std::pair<std::string, std::string>>{
+			{"Kenos (Npesta)", 								"npesta-kenos.mp3"},
+			{"Bloodbath (Riot)", 							"riot-bloodbath.mp3"},
+			{"Bloodlust (Knobbelboy)", 						"knobbelboy-bloodlust.mp3"},
+			{"Nhelv (Kingsammelot)", 						"kingsammelot-nhelv.mp3"},
+			{"Thinking Space II", 							"zoink-ts2.mp3"},
+			{"Slaugherhouse (SpaceUK's \"completion\")", 	getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse")},
+			{"Silent Clubstep (Doggie)", 					"doggie-silentclubstep.mp3"},
+			{"Unnerfed Sary Never Clear (Glow)", 			"glow-unsaryneverclear.mp3"},
+			{"Rupture (Cold)", 								"cold-rupture.mp3"},
+			{"Unnerfed Zodiac (nebnoob)", 					"nebnoob-unzodiac.mp3"},
+			{"Orbit (Zoink)", 								getNormalOrSwear("zoink", "swoink", "orbit")},
+			{"Artificial Ascent (Kingsammelot)", 			"kingsammelot-artificialascent.mp3"},
+			{"Deimos (Npesta)", 							getNormalOrSwear("npesta", "swearpesta", "deimos")},
+			{"Tartarus (AeonAir)", 							"aeonair-tartarus.mp3"},
+			{"WOW (Npesta)", 								"npesta-wow.mp3"},
+			{"Killbot (Kingsammelot)", 						"kingsammelot-killbot.mp3"}
+		}) {
+			auto path = Mod::get()->getResourcesDir() / file;
+			auto sound = makeSound(string::pathToString(path).c_str());
+			if (sound.isErr()) {
+				log::error("Failed to preload sound '{}': {}", file, sound.unwrapErr());
+				continue;
+			}
+			m_fields->m_preloadedSounds[key] = sound.unwrap();
+			log::info("Preloaded sound '{}'", file);
+		}
+
+		// Preload custom reactions
+		auto reaction = Mod::get()->getSettingValue<std::string>("reaction");
+		if (reaction == "Custom" || reaction == "Random (With Custom)") {
+			auto custom = getCustomReaction();
+			if (custom.isErr()) {
+				log::error("Failed to preload custom reaction: {}", custom.unwrapErr());
+			}
+
+			auto sound = makeSound(string::pathToString(custom.unwrap()).c_str());
+			if (sound.isErr()) {
+				log::error("Failed to preload custom reaction '{}': {}", custom.unwrap(), sound.unwrapErr());
+			} else {
+				m_fields->m_preloadedSounds["Custom"] = sound.unwrap();
+				log::info("Preloaded custom reaction '{}'", custom.unwrap());
+			}
+		}
+	}
+
+	bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
+		if (!PlayLayer::init(level, useReplay, dontCreateObjects)) return false;
+		if (Mod::get()->getSettingValue<bool>("preload-sounds")) {
+			log::info("Preloading sounds...");
+			preloadSounds();
+		}
+		return true;
+	}
 
 	void playEndAnimationToPos(CCPoint position) {
 		PlayLayer::playEndAnimationToPos(position);
@@ -35,12 +93,23 @@ class $modify(PLHook, PlayLayer) {
 		if (mod->getSettingValue<bool>("no-normal") && !m_isPracticeMode && !m_isTestMode) return;
 		if (mod->getSettingValue<bool>("no-platformer") && m_isPlatformer) return;
 
-		auto soundRes = getSound();
-		if (soundRes.isErr()) {
-			log::error("{}", soundRes.unwrapErr());
-			return;
+		FMOD::Sound* sound;
+		if (Mod::get()->getSettingValue<bool>("preload-sounds")) {
+			auto soundRes = getPreloadedSound();
+			if (soundRes.isErr()) {
+				log::error("{}", soundRes.unwrapErr());
+				return;
+			}
+			sound = soundRes.unwrap();
+	 	} else {
+			auto soundRes = getSound();
+			if (soundRes.isErr()) {
+				log::error("{}", soundRes.unwrapErr());
+				return;
+			}
+			sound = soundRes.unwrap();
 		}
-		FMOD::Sound* sound = soundRes.unwrap();
+
 		if (m_fields->m_engine->m_system->playSound(sound, nullptr, false, &m_fields->m_channel) == FMOD_OK) {
 			float volume = mod->getSettingValue<int64_t>("volume") / 100.f;
 			m_fields->m_channel->setVolume(volume);
@@ -52,30 +121,56 @@ class $modify(PLHook, PlayLayer) {
 		if (file.isErr()) {
 			return Err("{}", file.unwrapErr());
 		}
+		auto ret = makeSound(string::pathToString(file.unwrap()).c_str());
+		if (ret.isErr()) {
+			return Err("{}", ret.unwrapErr());
+		}
+		return Ok(ret.unwrap());
+	}
 
-		auto path = Mod::get()->getResourcesDir() / file.unwrap();
+	Result<FMOD::Sound*> getPreloadedSound() {
+		if (m_fields->m_preloadedSounds.empty()) {
+			return Err("There are no preloaded sounds");
+		}
 
+		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
+		if (reaction == "Random") {
+			// Remove custom sound and pick randomly
+			auto preloaded = m_fields->m_preloadedSounds;
+			preloaded.erase("Custom");
+
+			auto it = preloaded.begin();
+			std::advance(it, randint(0, preloaded.size() - 1));
+			return Ok(it->second);
+		} else if (reaction == "Random (With Custom)") {
+			auto it = m_fields->m_preloadedSounds.begin();
+			std::advance(it, randint(0, m_fields->m_preloadedSounds.size() - 1));
+			return Ok(it->second);
+		}
+
+		for (const auto& [key, sound] : m_fields->m_preloadedSounds) {
+			if (key == reaction) {
+				return Ok(sound);
+			}
+		}
+
+		// This should be unreachable so if we reach this, it's definitely a bug
+		log::error("Please report this issue to the OMG! developer");
+		return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction);
+	}
+
+	Result<FMOD::Sound*> makeSound(const char* file) {
 		FMOD::Sound* ret;
 		FMOD_RESULT res = m_fields->m_engine->m_system->createSound(
-			string::pathToString(path).c_str(),
+			file,
 			FMOD_DEFAULT,
 			nullptr,
 			&ret
 		);
 		if (res != FMOD_OK) {
-			return Err(
-				"Could not make sound for '{}': {} (0x{:02X})", file, FMOD_ErrorString(res), (int)res
-			);
+			return Err("Could not make sound for '{}': {} (0x{:02X})", file, FMOD_ErrorString(res), (int)res);
 		}
-
 		return Ok(ret);
-	}
-
-	int randint(int a, int b) {
-		static std::random_device rd;
-		static std::mt19937 rng(rd());
-		std::uniform_int_distribution<> dist(a, b);
-		return dist(rng);
 	}
 
 	inline std::string getNormalOrSwear(
@@ -84,6 +179,13 @@ class $modify(PLHook, PlayLayer) {
 		const std::string& level
 	) {
 		return fmt::format("{}-{}.mp3", Mod::get()->getSettingValue<bool>("swearuk") ? swear : normal, level);
+	}
+
+	int randint(int a, int b) {
+		static std::random_device rd;
+		static std::mt19937 rng(rd());
+		std::uniform_int_distribution<> dist(a, b);
+		return dist(rng);
 	}
 
 	Result<std::filesystem::path> getCustomReaction() const {
@@ -123,7 +225,7 @@ class $modify(PLHook, PlayLayer) {
 			file = options[randint(0, options.size() - 1)];
 		} else if (reaction == "Custom") {
 			return getCustomReaction();
-		} else if (reaction == "Random (With Customs)") {
+		} else if (reaction == "Random (With Custom)") {
 			std::vector<std::filesystem::path> files;
 			for (const auto& option : options) {
 				files.push_back(option);

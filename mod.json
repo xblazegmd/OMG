@@ -54,7 +54,7 @@
 			"default": "Random",
 			"one-of": [
 				"Random",
-				"Random (With Customs)",
+				"Random (With Custom)",
 				"Kenos (Npesta)",
 				"Bloodbath (Riot)",
 				"Bloodlust (Knobbelboy)",
@@ -131,6 +131,16 @@
 			"enable-if-description": "Please enable the mod :)",
 			"name": "No Reaction On Startpos",
 			"description": "Do not play any reaction when playing on a start position",
+			"default": true
+		},
+		"advanced-title": {
+			"type": "title",
+			"name": "Advanced Options"
+		},
+		"preload-sounds": {
+			"type": "bool",
+			"name": "Preload Sounds",
+			"description": "Try to preload all sounds when opening a level.\n\nDisabling this may reduce performance",
 			"default": true
 		}
 	}

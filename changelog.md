@@ -1,7 +1,8 @@
 # 1.3.0
 - April Fools is over :(
 - Add __Kingsammelot's__ completion of [Killbot](https://youtu.be/I1_yfoHOrbQ)
-- Add *Custom Reactions*
+- Add Custom Reactions
+- Add option to preload sounds (this should hopefully fix any lag issues)
 - Add option to disable the reactions on platformer
 - Make end trigger support better
 
