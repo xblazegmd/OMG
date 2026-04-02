@@ -12,11 +12,11 @@
 
 using namespace geode::prelude;
 
-$execute {
-	if (!std::filesystem::exists(Mod::get()->getConfigDir() / "reactions")) {
-		(void)file::createDirectory(Mod::get()->getConfigDir() / "reactions");
-	}
-}
+// $execute {
+// 	if (!std::filesystem::exists(Mod::get()->getConfigDir() / "reactions")) {
+// 		(void)file::createDirectory(Mod::get()->getConfigDir() / "reactions");
+// 	}
+// }
 
 class $modify(PLHook, PlayLayer) {
 	struct Fields {
@@ -78,6 +78,13 @@ class $modify(PLHook, PlayLayer) {
 		return Ok(ret);
 	}
 
+	int randint(int a, int b) {
+		static std::random_device rd;
+		static std::mt19937 rng(rd());
+		std::uniform_int_distribution<> dist(a, b);
+		return dist(rng);
+	}
+
 	inline std::string getNormalOrSwear(
 		const std::string& normal,
 		const std::string& swear,
@@ -86,11 +93,12 @@ class $modify(PLHook, PlayLayer) {
 		return fmt::format("{}-{}.mp3", Mod::get()->getSettingValue<bool>("swearuk") ? swear : normal, level);
 	}
 
-	int randint(int a, int b) {
-		static std::random_device rd;
-		static std::mt19937 rng(rd());
-		std::uniform_int_distribution<> dist(a, b);
-		return dist(rng);
+	Result<std::filesystem::path> getCustomReaction() const {
+		auto reaction = Mod::get()->getSettingValue<std::filesystem::path>("custom-reaction");
+		if (!std::filesystem::exists(reaction)) {
+			return Err("The custom reaction's file was not found");
+		}
+		return Ok(reaction);
 	}
 
 	Result<std::filesystem::path> getReactionPath() {
@@ -121,28 +129,20 @@ class $modify(PLHook, PlayLayer) {
 		if (reaction == "Random") {
 			file = options[randint(0, options.size() - 1)];
 		} else if (reaction == "Custom") {
-			auto customReactions = getCustomReactions();
-			if (customReactions.isErr()) {
-				return Err("Could not get custom reactions: {}", customReactions.unwrapErr());
-			} else {
-				auto customs = customReactions.unwrap();
-				return Ok(customs[randint(0, customs.size() - 1)]);
-			}
+			return getCustomReaction();
 		} else if (reaction == "Random (With Customs)") {
 			std::vector<std::filesystem::path> files;
 			for (const auto& option : options) {
 				files.push_back(option);
 			}
 
-			auto customReactions = getCustomReactions();
-			if (customReactions.isErr()) {
-				return Err("Could not get custom reactions: {}", customReactions.unwrapErr());
-			} else {
-				for (const auto& reaction : customReactions.unwrap()) {
-					files.push_back(reaction);
-				}
-				return Ok(files[randint(0, files.size() - 1)]);
+			auto custom = getCustomReaction();
+			if (custom.isErr()) {
+				return Err("Could not get custom reactions: {}", custom.unwrapErr());
 			}
+			files.push_back(custom.unwrap());
+
+			return Ok(files[randint(0, files.size() - 1)]);
 		} else if (reaction == "Kenos (Npesta)") {
 			file = options[0];
 		} else if (reaction == "Bloodbath (Riot)") {
@@ -183,38 +183,6 @@ class $modify(PLHook, PlayLayer) {
 		}
 
 		return Ok(Mod::get()->getResourcesDir() / file);
-	}
-
-	Result<std::vector<std::filesystem::path>> getCustomReactions() {
-		auto reactionsPath = Mod::get()->getConfigDir() / "reactions";
-
-		std::error_code err;
-		if (!std::filesystem::exists(reactionsPath, err) || err) {
-			return Err("There is no custom reactions");
-		}
-		if (!std::filesystem::is_directory(reactionsPath, err) || err) {
-			return Err("Excuse me did you just make the reactions folder a file?");
-		}
-		if (std::filesystem::is_empty(reactionsPath, err) || err) {
-			return Err("There is no custom reactions");
-		}
-
-		auto filesRes = file::readDirectory(reactionsPath);
-		if (filesRes.isErr()) {
-			// This should be unreachable, surely
-			return Err("{}", filesRes.unwrapErr());
-		}
-
-		auto files = filesRes.unwrap();
-
-		// Remove anything that isn't an audio file
-		std::erase_if(files, [](const auto& file) {
-			return !std::filesystem::is_regular_file(file) || (file.extension() != ".mp3" && file.extension() != ".ogg");
-		});
-		if (files.empty()) {
-			return Err("There is no custom reactions");
-		}
-		return Ok(files);
 	}
 
 	void stopSound() {

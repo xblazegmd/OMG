@@ -75,6 +75,20 @@
 				"Custom"
 			]
 		},
+		"custom-reaction": {
+			"type": "file",
+			"name": "Custom Reaction",
+			"description": "A path to an <cc>audio file</c> that will be treated as a <co>custom reaction</c>",
+			"default": "{mod_resources_dir}/custom-reaction.mp3",
+			"control": {
+				"filters": [
+					{
+						"files": ["*.mp3", "*.ogg"],
+						"description": "Audio Files"
+					}
+				]
+			}
+		},
 		"swearuk": {
 			"type": "bool",
 			"name": "SwearUK",
