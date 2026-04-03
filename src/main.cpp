@@ -193,27 +193,27 @@ class $modify(PLHook, PlayLayer) {
 		const std::string& swear,
 		const std::string& level
 	) {
-		return fmt::format("{}-{}.mp3", Mod::get()->getSettingValue<bool>("swearuk") ? swear : normal, level);
+		return fmt::format("{}-{}.ogg", Mod::get()->getSettingValue<bool>("swearuk") ? swear : normal, level);
 	}
 
 	inline utils::StringMap<std::string> getFiles() {
 		return {
-			{"Kenos (Npesta)", 								"npesta-kenos.mp3"},
-			{"Bloodbath (Riot)", 							"riot-bloodbath.mp3"},
-			{"Bloodlust (Knobbelboy)", 						"knobbelboy-bloodlust.mp3"},
-			{"Nhelv (Kingsammelot)", 						"kingsammelot-nhelv.mp3"},
-			{"Thinking Space II", 							"zoink-ts2.mp3"},
+			{"Kenos (Npesta)", 								"npesta-kenos.ogg"},
+			{"Bloodbath (Riot)", 							"riot-bloodbath.ogg"},
+			{"Bloodlust (Knobbelboy)", 						"knobbelboy-bloodlust.ogg"},
+			{"Nhelv (Kingsammelot)", 						"kingsammelot-nhelv.ogg"},
+			{"Thinking Space II", 							"zoink-ts2.ogg"},
 			{"Slaugherhouse (SpaceUK's \"completion\")", 	getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse")},
-			{"Silent Clubstep (Doggie)", 					"doggie-silentclubstep.mp3"},
-			{"Unnerfed Sary Never Clear (Glow)", 			"glow-unsaryneverclear.mp3"},
-			{"Rupture (Cold)", 								"cold-rupture.mp3"},
-			{"Unnerfed Zodiac (nebnoob)", 					"nebnoob-unzodiac.mp3"},
+			{"Silent Clubstep (Doggie)", 					"doggie-silentclubstep.ogg"},
+			{"Unnerfed Sary Never Clear (Glow)", 			"glow-unsaryneverclear.ogg"},
+			{"Rupture (Cold)", 								"cold-rupture.ogg"},
+			{"Unnerfed Zodiac (nebnoob)", 					"nebnoob-unzodiac.ogg"},
 			{"Orbit (Zoink)", 								getNormalOrSwear("zoink", "swoink", "orbit")},
-			{"Artificial Ascent (Kingsammelot)", 			"kingsammelot-artificialascent.mp3"},
+			{"Artificial Ascent (Kingsammelot)", 			"kingsammelot-artificialascent.ogg"},
 			{"Deimos (Npesta)", 							getNormalOrSwear("npesta", "swearpesta", "deimos")},
-			{"Tartarus (AeonAir)", 							"aeonair-tartarus.mp3"},
-			{"WOW (Npesta)", 								"npesta-wow.mp3"},
-			{"Killbot (Kingsammelot)", 						"kingsammelot-killbot.mp3"}
+			{"Tartarus (AeonAir)", 							"aeonair-tartarus.ogg"},
+			{"WOW (Npesta)", 								"npesta-wow.ogg"},
+			{"Killbot (Kingsammelot)", 						"kingsammelot-killbot.ogg"}
 		};
 	}
 

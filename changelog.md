@@ -1,6 +1,7 @@
 # 1.3.1
-- Boring bug fixes
-- Nothing too meaningful here just look at the changes below
+- Bug fixes (didn't exit properly if a `Result` returned Err ;-;)
+- Use .ogg instead of .mp3
+- *look at the changes below for cool stuff*
 
 # 1.3.0
 - April Fools is over :(

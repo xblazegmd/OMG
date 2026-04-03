@@ -18,7 +18,7 @@
 	"links": {"source": "https://github.com/xblazegmd/OMG"},
 	"resources": {
 		"files": [
-			"resources/*.mp3"
+			"resources/*.ogg"
 		]
 	},
 	"settings": {
@@ -79,7 +79,7 @@
 			"type": "file",
 			"name": "Custom Reaction",
 			"description": "A path to an <cc>audio file</c> that will be treated as a <co>custom reaction</c>",
-			"default": "{mod_resources_dir}/custom-reaction.mp3",
+			"default": "{mod_resources_dir}/custom-reaction.ogg",
 			"control": {
 				"filters": [
 					{
