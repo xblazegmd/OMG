@@ -37,6 +37,7 @@ class $modify(PLHook, PlayLayer) {
 			auto custom = getCustomReaction();
 			if (custom.isErr()) {
 				log::error("Failed to preload custom reaction: {}", custom.unwrapErr());
+				return;
 			}
 
 			auto sound = makeSound(string::pathToString(custom.unwrap()).c_str());

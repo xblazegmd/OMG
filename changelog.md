@@ -1,3 +1,7 @@
+# 1.3.1
+- Boring bug fixes
+- Nothing too meaningful here just look at the changes below
+
 # 1.3.0
 - April Fools is over :(
 - Add __Kingsammelot's__ completion of [Killbot](https://youtu.be/I1_yfoHOrbQ)
