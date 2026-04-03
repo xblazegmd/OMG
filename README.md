@@ -20,7 +20,7 @@ The following reactions are included
 - Npesta's completion of [Deimos (Endlevel)](https://www.youtube.com/watch?v=FgxsNzQnF5o)
 - AeonAir's completion of [Tartarus](https://www.youtube.com/watch?v=areGj_ppaYo)
 - Npesta's completion of [WOW](https://www.youtube.com/watch?v=CbUVw7p0Ebg)
-- __Kingsammelot's__ completion of [Killbot](https://youtu.be/I1_yfoHOrbQ)
+- Kingsammelot's completion of [Killbot](https://youtu.be/I1_yfoHOrbQ)
 
 ### Credits
 - sSevcon for the original mod idea (originally just the Npesta reaction)
