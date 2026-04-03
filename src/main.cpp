@@ -226,7 +226,9 @@ class $modify(PLHook, PlayLayer) {
 
 	Result<std::filesystem::path> getCustomReaction() const {
 		auto reaction = Mod::get()->getSettingValue<std::filesystem::path>("custom-reaction");
-		if (!std::filesystem::exists(reaction)) {
+		std::error_code ec;
+		auto exists = std::filesystem::exists(reaction, ec);
+		if (ec || !exists) {
 			return Err("The custom reaction's file was not found");
 		}
 		return Ok(reaction);
