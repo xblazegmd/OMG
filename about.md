@@ -18,7 +18,8 @@ The following reactions are included
 - __Npesta's__ completion of __[Deimos (EndLevel)](https://www.youtube.com/watch?v=FgxsNzQnF5o)__
 - __AeonAir's__ completion of __[Tartarus](https://www.youtube.com/watch?v=areGj_ppaYo)__
 - __Npesta's__ completion of __[WOW](https://www.youtube.com/watch?v=CbUVw7p0Ebg)__
-- __Kingsammelot's__ completion of [Killbot](https://youtu.be/I1_yfoHOrbQ)
+- __Kingsammelot's__ completion of __[Killbot](https://youtu.be/I1_yfoHOrbQ)__
+- __Zoink's__ completion of __[Tidal Wave](https://www.youtube.com/watch?v=9fsZ014qB3s)__
 
 ### Credits
 - [sSevcon](user:24373814) for the original mod idea (originally just the Npesta reaction)

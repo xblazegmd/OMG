@@ -21,6 +21,7 @@ The following reactions are included
 - AeonAir's completion of [Tartarus](https://www.youtube.com/watch?v=areGj_ppaYo)
 - Npesta's completion of [WOW](https://www.youtube.com/watch?v=CbUVw7p0Ebg)
 - Kingsammelot's completion of [Killbot](https://youtu.be/I1_yfoHOrbQ)
+- Zoink's completion of [Tidal Wave](https://www.youtube.com/watch?v=9fsZ014qB3s)
 
 ### Credits
 - sSevcon for the original mod idea (originally just the Npesta reaction)
