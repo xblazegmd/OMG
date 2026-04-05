@@ -214,7 +214,8 @@ class $modify(PLHook, PlayLayer) {
 			{"Tartarus (AeonAir)", 							"aeonair-tartarus.ogg"},
 			{"WOW (Npesta)", 								"npesta-wow.ogg"},
 			{"Killbot (Kingsammelot)", 						"kingsammelot-killbot.ogg"},
-			{"Tidal Wave (Zoink)", 							getNormalOrSwear("zoink", "swoink", "tw")}
+			{"Tidal Wave (Zoink)", 							getNormalOrSwear("zoink", "swoink", "tw")},
+			{"Acheron (Zoink)",								getNormalOrSwear("zoink", "swoink", "acheron")}
 		};
 	}
 

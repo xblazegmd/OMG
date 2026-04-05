@@ -22,6 +22,7 @@ The following reactions are included
 - Npesta's completion of [WOW](https://www.youtube.com/watch?v=CbUVw7p0Ebg)
 - Kingsammelot's completion of [Killbot](https://youtu.be/I1_yfoHOrbQ)
 - Zoink's completion of [Tidal Wave](https://www.youtube.com/watch?v=9fsZ014qB3s)
+- Zoink's completion of [Acheron](https://youtu.be/sBKR6aUorzA)
 
 ### Credits
 - sSevcon for the original mod idea (originally just the Npesta reaction)

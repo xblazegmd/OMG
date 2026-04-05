@@ -1,6 +1,6 @@
 # 1.3.2
 - Add __Zoink's__ completion of [Tidal Wave](https://www.youtube.com/watch?v=9fsZ014qB3s)
-    - *<c-a6a6a6>I tried my best to censor it but the VC may have had some (hopefully barely noticeable) profanity gone unnoticed, keep that in mind</c>*
+- Add __Zoink's__ completion of [Acheron](https://youtu.be/sBKR6aUorzA)
 
 # 1.3.1
 - Bug fixes (didn't exit properly if a `Result` returned Err ;-;)
