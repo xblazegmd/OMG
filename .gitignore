@@ -67,3 +67,5 @@ build-*/
 **.af
 **.af~lock~
 **.sh
+!new_reaction.sh
+**/temp
