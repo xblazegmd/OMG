@@ -20,7 +20,11 @@ class $modify(PLHook, PlayLayer) {
 
 	void preloadSounds() {
 		m_fields->m_preloadedSounds.clear();
+		auto reaction = Mod::get()->getSettingValue<std::string>("reaction");
+
 		for (const auto& [key, file] : getFiles()) {
+			if (key != reaction) continue; // Don't preload sounds that won't get loaded
+
 			auto path = Mod::get()->getResourcesDir() / file;
 			auto sound = makeSound(string::pathToString(path).c_str());
 			if (sound.isErr()) {
@@ -32,7 +36,6 @@ class $modify(PLHook, PlayLayer) {
 		}
 
 		// Preload custom reactions
-		auto reaction = Mod::get()->getSettingValue<std::string>("reaction");
 		if (reaction == "Custom" || reaction == "Random (With Custom)") {
 			auto custom = getCustomReaction();
 			if (custom.isErr()) {
