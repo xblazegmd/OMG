@@ -215,7 +215,8 @@ class $modify(PLHook, PlayLayer) {
 			{"WOW (Npesta)", 								"npesta-wow.ogg"},
 			{"Killbot (Kingsammelot)", 						"kingsammelot-killbot.ogg"},
 			{"Tidal Wave (Zoink)", 							getNormalOrSwear("zoink", "swoink", "tw")},
-			{"Acheron (Zoink)",								getNormalOrSwear("zoink", "swoink", "acheron")}
+			{"Acheron (Zoink)",								getNormalOrSwear("zoink", "swoink", "acheron")},
+			{"Unnerfed Sakupen Circles (totalgd)", 			"totalgd-uskc.ogg"},
 		};
 	}
 
