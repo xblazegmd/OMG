@@ -23,7 +23,7 @@ class $modify(PLHook, PlayLayer) {
 		auto reaction = Mod::get()->getSettingValue<std::string>("reaction");
 
 		for (const auto& [key, file] : getFiles()) {
-			if (key != reaction) continue; // Don't preload sounds that won't get loaded
+			if (key != reaction && !string::contains(reaction, "Random")) continue; // Don't preload sounds that won't get loaded
 
 			auto path = Mod::get()->getResourcesDir() / file;
 			auto sound = makeSound(string::pathToString(path).c_str());
