@@ -1,6 +1,7 @@
 # 1.3.3
 - Add __totalgd's__ completion of [Unnerfed Sakupen Circles](https://youtu.be/TY3DB4M8tgA)
 - Optimize preloading
+- Add Patreon links
 
 # 1.3.2
 - Add __Zoink's__ completion of [Tidal Wave](https://www.youtube.com/watch?v=9fsZ014qB3s)

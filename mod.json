@@ -12,10 +12,14 @@
 	"developer": "XblazeGMD",
 	"description": "npesta be like",
 	"dependencies": {
-		"geode.node-ids": ">=v1.20.0"
+		"geode.node-ids": ">=v1.20.0",
+		"xblazegmd.geode-api": ">=1.0.0"
 	},
 	"tags": ["joke", "offline", "interface"],
-	"links": {"source": "https://github.com/xblazegmd/OMG"},
+	"links": {
+		"homepage": "https://xblazegmd.vercel.app",
+		"source": "https://github.com/xblazegmd/OMG"
+	},
 	"resources": {
 		"files": [
 			"resources/*.ogg"
