@@ -1,5 +1,6 @@
 # 1.3.3
 - Add __totalgd's__ completion of [Unnerfed Sakupen Circles](https://youtu.be/TY3DB4M8tgA)
+- Update mod logo
 - Optimize preloading
 - Add Patreon links
 
