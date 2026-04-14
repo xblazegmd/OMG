@@ -21,6 +21,7 @@ The following reactions are included
 - __Kingsammelot's__ completion of __[Killbot](https://youtu.be/I1_yfoHOrbQ)__
 - __Zoink's__ completion of __[Tidal Wave](https://www.youtube.com/watch?v=9fsZ014qB3s)__
 - __Zoink's__ completion of __[Acheron](https://youtu.be/sBKR6aUorzA)__
+- __totalgd's__ completion of __[Unnerfed Sakupen Circles](https://youtu.be/TY3DB4M8tgA)__
 
 ### Credits
 - [sSevcon](user:24373814) for the original mod idea (originally just the Npesta reaction)
