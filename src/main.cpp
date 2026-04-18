@@ -13,6 +13,13 @@ using namespace geode::prelude;
 
 class $modify(PLHook, PlayLayer) {
 	struct Fields {
+		~Fields() {
+			for (auto& [_, sound] : m_preloadedSounds) {
+				sound->release();
+			}
+			m_sound->release();
+		}
+
 		FMODAudioEngine* m_engine = FMODAudioEngine::sharedEngine();
 		FMOD::Channel* m_channel;
 		utils::StringMap<FMOD::Sound*> m_preloadedSounds;
@@ -20,6 +27,8 @@ class $modify(PLHook, PlayLayer) {
 	};
 
 	void preloadSounds() {
+		if (!m_fields->m_preloadedSounds.empty()) return;
+
 		auto reaction = Mod::get()->getSettingValue<std::string>("reaction");
 
 		for (const auto& [key, file] : getFiles()) {
@@ -88,6 +97,8 @@ class $modify(PLHook, PlayLayer) {
 			}
 			m_fields->m_sound = soundRes.unwrap();
 	 	} else {
+			if (m_fields->m_sound) m_fields->m_sound->release();
+
 			auto soundRes = getSound();
 			if (soundRes.isErr()) {
 				log::error("{}", soundRes.unwrapErr());
@@ -244,20 +255,11 @@ class $modify(PLHook, PlayLayer) {
 		return Ok(reaction);
 	}
 
-	void cleanup() {
-		for (auto& [_, sound] : m_fields->m_preloadedSounds) {
-			sound->release();
-		}
-		m_fields->m_preloadedSounds.clear();
-		if (m_fields->m_sound) m_fields->m_sound->release();
-	}
-
 	void stopSound() {
 		if (m_fields->m_channel) {
 			m_fields->m_channel->stop();
 			m_fields->m_channel = nullptr;
 		}
-		cleanup();
 	}
 
 	void onExit() {
