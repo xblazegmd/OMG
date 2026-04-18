@@ -16,10 +16,10 @@ class $modify(PLHook, PlayLayer) {
 		FMODAudioEngine* m_engine = FMODAudioEngine::sharedEngine();
 		FMOD::Channel* m_channel;
 		utils::StringMap<FMOD::Sound*> m_preloadedSounds;
+		FMOD::Sound* m_sound;
 	};
 
 	void preloadSounds() {
-		m_fields->m_preloadedSounds.clear();
 		auto reaction = Mod::get()->getSettingValue<std::string>("reaction");
 
 		for (const auto& [key, file] : getFiles()) {
@@ -80,24 +80,28 @@ class $modify(PLHook, PlayLayer) {
 		if (mod->getSettingValue<bool>("no-normal") && !m_isPracticeMode && !m_isTestMode) return;
 		if (mod->getSettingValue<bool>("no-platformer") && m_isPlatformer) return;
 
-		FMOD::Sound* sound;
 		if (Mod::get()->getSettingValue<bool>("preload-sounds")) {
 			auto soundRes = getPreloadedSound();
 			if (soundRes.isErr()) {
 				log::error("{}", soundRes.unwrapErr());
 				return;
 			}
-			sound = soundRes.unwrap();
+			m_fields->m_sound = soundRes.unwrap();
 	 	} else {
 			auto soundRes = getSound();
 			if (soundRes.isErr()) {
 				log::error("{}", soundRes.unwrapErr());
 				return;
 			}
-			sound = soundRes.unwrap();
+			m_fields->m_sound = soundRes.unwrap();
 		}
 
-		if (m_fields->m_engine->m_system->playSound(sound, nullptr, false, &m_fields->m_channel) == FMOD_OK) {
+		if (m_fields->m_engine->m_system->playSound(
+			m_fields->m_sound,
+			nullptr,
+			false,
+			&m_fields->m_channel
+		) == FMOD_OK) {
 			float volume = mod->getSettingValue<int64_t>("volume") / 100.f;
 			m_fields->m_channel->setVolume(volume);
 		}
@@ -240,11 +244,20 @@ class $modify(PLHook, PlayLayer) {
 		return Ok(reaction);
 	}
 
+	void cleanup() {
+		for (auto& [_, sound] : m_fields->m_preloadedSounds) {
+			sound->release();
+		}
+		m_fields->m_preloadedSounds.clear();
+		if (m_fields->m_sound) m_fields->m_sound->release();
+	}
+
 	void stopSound() {
 		if (m_fields->m_channel) {
 			m_fields->m_channel->stop();
 			m_fields->m_channel = nullptr;
 		}
+		cleanup();
 	}
 
 	void onExit() {
