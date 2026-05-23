@@ -80,6 +80,8 @@
 				"Acheron (Zoink)",
 				"Unnerfed Sakupen Circles (totalgd)",
 				"Time Extreme (Vortrox)",
+				"Yatagarasu (Vortrox)",
+				"Boobawamba (Zoink)",
 				"Custom"
 			]
 		},
@@ -102,7 +104,7 @@
 			"name": "SwearUK",
 			"enable-if": "quick-enable",
 			"enable-if-description": "Please enable the mod :)",
-			"description": "Show the uncensored version of all the reactions\n\n<co>(Contains profanity, may not be appropriate for all ages)</c>",
+			"description": "Show the uncensored version of all the reactions <c-a6a6a6>(with the exception of zoink's boobawamba completion cuz I couldn't find a way to download the uncensored version)</c>\n\n<co>(Contains profanity, may not be appropriate for all ages)</c>",
 			"default": false
 		},
 		"no-blank-title": {

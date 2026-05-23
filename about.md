@@ -24,6 +24,7 @@ The following reactions are included
 - __totalgd's__ completion of __[Unnerfed Sakupen Circles](https://youtu.be/TY3DB4M8tgA)__
 - __Vortrox's__ completion of __[Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)__
 - __Vortrox's__ completion of __[Yatagarasu](https://www.youtube.com/watch?v=-T10YVjL-Yk)__
+- __Zoink's__ completion of __[Boobawamba](https://www.youtube.com/watch?v=DXV7CVkos7I)__
 
 ### Credits
 - [sSevcon](user:24373814) for the original mod idea (originally just the Npesta reaction)

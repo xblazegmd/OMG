@@ -109,7 +109,8 @@ class $modify(PLHook, PlayLayer) {
 			{"Acheron (Zoink)",								getNormalOrSwear("zoink", "swoink", "acheron")},
 			{"Unnerfed Sakupen Circles (totalgd)", 			"totalgd-uskc.ogg"},
 			{"Time Extreme (Vortrox)", 						"vortrox-timeextreme.ogg"},
-			{"Yatagarasu (Vortrox)", 						"vortrox-yata.ogg"}
+			{"Yatagarasu (Vortrox)", 						"vortrox-yata.ogg"},
+			{"Boobawamba (Zoink)", 							"zoink-boobawamba.ogg"}
 		};
 	}
 
