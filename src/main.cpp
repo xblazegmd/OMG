@@ -60,6 +60,8 @@ class $modify(PLHook, PlayLayer) {
 			return Ok(resources / it->second);
 		} else if (reaction == "Random (With Custom)") {
 			std::vector<std::filesystem::path> filePaths;
+			filePaths.reserve(files.size() + 1);
+
 			for (const auto& [_, file] : files) {
 				filePaths.push_back(Mod::get()->getResourcesDir() / file);
 			}
