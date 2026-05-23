@@ -39,7 +39,7 @@ class $modify(PLHook, PlayLayer) {
 		auto audioEngine = FMODAudioEngine::get();
 		audioEngine->m_globalChannel->setPaused(false);
 		audioEngine->playEffectAdvanced(
-			string::pathToString(reaction.unwrap()),
+			string::pathToString(std::move(reaction).unwrap()),
 			1.f,
 			0, // idk what this is (I don't think anyone knows)
 			mod->getSettingValue<int64_t>("volume") / 100.f, // volume
