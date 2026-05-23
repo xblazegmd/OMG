@@ -1,27 +1,28 @@
-# 1.4.0
+# OMG!
+## 1.4.0
 - Switch to using `FMODAudioEngine::playEffect` instead of using raw FMOD for playing reactions
 - Remove preloading <c-a6a6a6>(should not be needed anymore thanks to the changes above!)</c>
 
-# 1.3.4
+## 1.3.4
 - Fix memory leaks
 
-# 1.3.3
+## 1.3.3
 - Add __totalgd's__ completion of [Unnerfed Sakupen Circles](https://youtu.be/TY3DB4M8tgA)
 - Update mod logo
 - Optimize preloading
 - Add Patreon links
 
-# 1.3.2
+## 1.3.2
 - Add __Zoink's__ completion of [Tidal Wave](https://www.youtube.com/watch?v=9fsZ014qB3s)
 - Add __Zoink's__ completion of [Acheron](https://youtu.be/sBKR6aUorzA)
 - Fix audio not playing when setting reaction to *"Thinking Space II (Zoink)"*
 
-# 1.3.1
+## 1.3.1
 - Bug fixes (didn't exit properly if a `Result` returned Err ;-;)
 - Use .ogg instead of .mp3
 - Nothing else tbh *look at the changes below for interesting stuff*
 
-# 1.3.0
+## 1.3.0
 - April Fools is over :(
 - Add __Kingsammelot's__ completion of [Killbot](https://youtu.be/I1_yfoHOrbQ)
 - Add Custom Reactions
@@ -30,10 +31,10 @@
 - Lots of internal refactors
 - Use `playPlatformerEndAnimationToPos` instead of `levelComplete` for playing the reactions with end triggers
 
-# 1.2.1
+## 1.2.1
 - wat
 
-# 1.2.0
+## 1.2.0
 - Add __Zoink's__ completion of [Orbit](https://youtu.be/QKcv8DkNPd0?si=OJdK0ou-j5u4SI0g)
 - Add __Kingsammelot's__ completion of [Artificial Ascent](https://www.youtube.com/watch?v=q8f7yzvM8EQ)
 - Add __Npesta's__ completion of [Deimos (EndLevel)](https://www.youtube.com/watch?v=FgxsNzQnF5o)
@@ -43,8 +44,8 @@
 - Normalized reaction volume and made them louder (plz turn down your volume)
 - Fix reactions not working with end triggers
 
-# 1.1.0
+## 1.1.0
 - Add __nebnoob's__ verification of [Unnerfed Zodiac](https://youtu.be/3mvddPaNklg)
 
-# 1.0.0
+## 1.0.0
 - The smallest update ever. It only adds, idk, the whole mod? Yeah very small ik
