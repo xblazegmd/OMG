@@ -4,7 +4,7 @@
 - Add __Vortrox's__ completion of [Yatagarasu](https://www.youtube.com/watch?v=-T10YVjL-Yk)
 - Add __Zoink's__ completion of [Boobawamba](https://www.youtube.com/watch?v=DXV7CVkos7I)
     - *<c-a6a6a6>no uncensored version cuz I just couldn't find a way to download that, sry</c>*
-- Switch to using `FMODAudioEngine::playEffect` instead of using raw FMOD for playing reactions
+- Switch to using `FMODAudioEngine::playEffectAdvanced` instead of using raw FMOD for playing reactions
 - Remove preloading setting <c-a6a6a6>(should not be needed anymore thanks to the changes above!)</c>
 
 ## 1.3.4
