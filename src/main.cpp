@@ -41,23 +41,11 @@ class $modify(PLHook, PlayLayer) {
 		audioEngine->playEffectAdvanced(
 			string::pathToString(reaction.unwrap()),
 			1.f,
-			0,
-			mod->getSettingValue<int64_t>("volume") / 100.f,
-			1.f,
-			false,
-			false,
-			0,
-			0,
-			0,
-			0,
-			false,
-			0,
-			false,
-			true,
-			0,
-			0,
-			0,
-			0
+			0, // idk what this is (I don't think anyone knows)
+			mod->getSettingValue<int64_t>("volume") / 100.f, // volume
+			1.f, false, false, 0, 0, 0, 0, false, 0, false, // stuff we don't care abt
+			true, // this should remove lag (I think)
+			0, 0, 0, 0 // we also don't care abt this
 		);
 	}
 
