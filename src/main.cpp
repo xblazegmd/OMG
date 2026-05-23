@@ -1,76 +1,17 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/PlayLayer.hpp>
 #include <Geode/utils/file.hpp>
+#include <Geode/utils/random.hpp>
 #include <Geode/utils/string.hpp>
-#include <Geode/fmod/fmod.h>
-#include <Geode/fmod/fmod_errors.h>
+#include <Geode/utils/StringMap.hpp>
+#include <Geode/modify/PlayLayer.hpp>
+
 #include <filesystem>
-#include <random>
 #include <string>
 #include <vector>
 
 using namespace geode::prelude;
 
 class $modify(PLHook, PlayLayer) {
-	struct Fields {
-		~Fields() {
-			for (auto& [_, sound] : m_preloadedSounds) {
-				sound->release();
-			}
-			m_sound->release();
-		}
-
-		FMODAudioEngine* m_engine = FMODAudioEngine::sharedEngine();
-		FMOD::Channel* m_channel;
-		utils::StringMap<FMOD::Sound*> m_preloadedSounds;
-		FMOD::Sound* m_sound;
-	};
-
-	void preloadSounds() {
-		if (!m_fields->m_preloadedSounds.empty()) return;
-
-		auto reaction = Mod::get()->getSettingValue<std::string>("reaction");
-
-		for (const auto& [key, file] : getFiles()) {
-			if (key != reaction && !string::contains(reaction, "Random")) continue; // Don't preload sounds that won't get loaded
-
-			auto path = Mod::get()->getResourcesDir() / file;
-			auto sound = makeSound(string::pathToString(path).c_str());
-			if (sound.isErr()) {
-				log::error("Failed to preload sound '{}': {}", file, sound.unwrapErr());
-				continue;
-			}
-			m_fields->m_preloadedSounds[key] = sound.unwrap();
-			log::info("Preloaded sound '{}'", file);
-		}
-
-		// Preload custom reactions
-		if (reaction == "Custom" || reaction == "Random (With Custom)") {
-			auto custom = getCustomReaction();
-			if (custom.isErr()) {
-				log::error("Failed to preload custom reaction: {}", custom.unwrapErr());
-				return;
-			}
-
-			auto sound = makeSound(string::pathToString(custom.unwrap()).c_str());
-			if (sound.isErr()) {
-				log::error("Failed to preload custom reaction '{}': {}", custom.unwrap(), sound.unwrapErr());
-			} else {
-				m_fields->m_preloadedSounds["Custom"] = sound.unwrap();
-				log::info("Preloaded custom reaction '{}'", custom.unwrap());
-			}
-		}
-	}
-
-	bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
-		if (!PlayLayer::init(level, useReplay, dontCreateObjects)) return false;
-		if (Mod::get()->getSettingValue<bool>("preload-sounds")) {
-			log::info("Preloading sounds...");
-			preloadSounds();
-		}
-		return true;
-	}
-
 	void playEndAnimationToPos(CCPoint position) {
 		PlayLayer::playEndAnimationToPos(position);
 		playSound();
@@ -89,88 +30,20 @@ class $modify(PLHook, PlayLayer) {
 		if (mod->getSettingValue<bool>("no-normal") && !m_isPracticeMode && !m_isTestMode) return;
 		if (mod->getSettingValue<bool>("no-platformer") && m_isPlatformer) return;
 
-		if (Mod::get()->getSettingValue<bool>("preload-sounds")) {
-			auto soundRes = getPreloadedSound();
-			if (soundRes.isErr()) {
-				log::error("{}", soundRes.unwrapErr());
-				return;
-			}
-			m_fields->m_sound = soundRes.unwrap();
-	 	} else {
-			if (m_fields->m_sound) m_fields->m_sound->release();
-
-			auto soundRes = getSound();
-			if (soundRes.isErr()) {
-				log::error("{}", soundRes.unwrapErr());
-				return;
-			}
-			m_fields->m_sound = soundRes.unwrap();
+		auto reaction = this->getReactionPath();
+		if (reaction.isErr()) {
+			log::error("{}", reaction.unwrapErr());
+			return;
 		}
 
-		if (m_fields->m_engine->m_system->playSound(
-			m_fields->m_sound,
-			nullptr,
-			false,
-			&m_fields->m_channel
-		) == FMOD_OK) {
-			float volume = mod->getSettingValue<int64_t>("volume") / 100.f;
-			m_fields->m_channel->setVolume(volume);
-		}
-	}
-
-	inline Result<FMOD::Sound*> getSound() {
-		auto file = getReactionPath();
-		if (file.isErr()) {
-			return Err("{}", file.unwrapErr());
-		}
-		auto ret = makeSound(string::pathToString(file.unwrap()).c_str());
-		if (ret.isErr()) {
-			return Err("{}", ret.unwrapErr());
-		}
-		return Ok(ret.unwrap());
-	}
-
-	Result<FMOD::Sound*> getPreloadedSound() {
-		if (m_fields->m_preloadedSounds.empty()) {
-			return Err("There are no preloaded sounds");
-		}
-
-		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
-		if (reaction == "Random") {
-			// Remove custom sound and pick randomly
-			auto preloaded = m_fields->m_preloadedSounds;
-			preloaded.erase("Custom");
-
-			auto it = preloaded.begin();
-			std::advance(it, randint(0, preloaded.size() - 1));
-			return Ok(it->second);
-		} else if (reaction == "Random (With Custom)") {
-			auto it = m_fields->m_preloadedSounds.begin();
-			std::advance(it, randint(0, m_fields->m_preloadedSounds.size() - 1));
-			return Ok(it->second);
-		}
-
-		if (m_fields->m_preloadedSounds.count(reaction)) {
-			return Ok(m_fields->m_preloadedSounds[reaction]);
-		}
-
-		// This should be unreachable so if we reach this, it's definitely a bug
-		log::error("Please report this issue to the OMG! developer");
-		return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction);
-	}
-
-	Result<FMOD::Sound*> makeSound(const char* file) {
-		FMOD::Sound* ret;
-		FMOD_RESULT res = m_fields->m_engine->m_system->createSound(
-			file,
-			FMOD_DEFAULT,
-			nullptr,
-			&ret
+		auto audioEngine = FMODAudioEngine::get();
+		audioEngine->m_globalChannel->setPaused(false);
+		audioEngine->playEffect(
+			string::pathToString(reaction.unwrap()),
+			1.f,
+			0,
+			mod->getSettingValue<int64_t>("volume") / 100.f
 		);
-		if (res != FMOD_OK) {
-			return Err("Could not make sound for '{}': {} (0x{:02X})", file, FMOD_ErrorString(res), (int)res);
-		}
-		return Ok(ret);
 	}
 
 	Result<std::filesystem::path> getReactionPath() {
@@ -180,7 +53,7 @@ class $modify(PLHook, PlayLayer) {
 		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
 		if (reaction == "Random") {
 			auto it = files.begin();
-			std::advance(it, randint(0, files.size() - 1));
+			std::advance(it, random::generate(0, files.size()));
 			return Ok(resources / it->second);
 		} else if (reaction == "Random (With Custom)") {
 			std::vector<std::filesystem::path> filePaths;
@@ -194,16 +67,16 @@ class $modify(PLHook, PlayLayer) {
 			}
 			filePaths.push_back(custom.unwrap());
 
-			return Ok(filePaths[randint(0, filePaths.size() - 1)]);
+			return Ok(filePaths[random::generate(0, filePaths.size())]);
 		} else if (reaction == "Custom") {
 			return getCustomReaction();
-		} else if (files.count(reaction)) {
+		} else if (files.contains(reaction)) {
 			return Ok(resources / files[reaction]);
-		} else {
-			// This should be unreachable so if we reach this, it's definitely a bug
-			log::error("Please report this issue to the OMG! developer");
-			return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction);
 		}
+
+		// This should be unreachable so if we reach this, it's definitely a bug
+		log::error("Please report this issue to the OMG! developer");
+		return Err("Unknown reaction: {} (THIS SHOULD BE UNREACHABLE)", reaction);
 	}
 
 	inline std::string getNormalOrSwear(
@@ -220,7 +93,7 @@ class $modify(PLHook, PlayLayer) {
 			{"Bloodbath (Riot)", 							"riot-bloodbath.ogg"},
 			{"Bloodlust (Knobbelboy)", 						"knobbelboy-bloodlust.ogg"},
 			{"Nhelv (Kingsammelot)", 						"kingsammelot-nhelv.ogg"},
-			{"Thinking Space II (Zoink)", 							"zoink-ts2.ogg"},
+			{"Thinking Space II (Zoink)", 					"zoink-ts2.ogg"},
 			{"Slaugherhouse (SpaceUK's \"completion\")", 	getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse")},
 			{"Silent Clubstep (Doggie)", 					"doggie-silentclubstep.ogg"},
 			{"Unnerfed Sary Never Clear (Glow)", 			"glow-unsaryneverclear.ogg"},
@@ -238,13 +111,6 @@ class $modify(PLHook, PlayLayer) {
 		};
 	}
 
-	int randint(int a, int b) {
-		static std::random_device rd;
-		static std::mt19937 rng(rd());
-		std::uniform_int_distribution<> dist(a, b);
-		return dist(rng);
-	}
-
 	Result<std::filesystem::path> getCustomReaction() const {
 		auto reaction = Mod::get()->getSettingValue<std::filesystem::path>("custom-reaction");
 		std::error_code ec;
@@ -253,22 +119,5 @@ class $modify(PLHook, PlayLayer) {
 			return Err("The custom reaction's file was not found");
 		}
 		return Ok(reaction);
-	}
-
-	void stopSound() {
-		if (m_fields->m_channel) {
-			m_fields->m_channel->stop();
-			m_fields->m_channel = nullptr;
-		}
-	}
-
-	void onExit() {
-		PlayLayer::onExit();
-		stopSound();
-	}
-
-	void resetLevel() {
-		PlayLayer::resetLevel();
-		stopSound();
 	}
 };

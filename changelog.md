@@ -1,3 +1,7 @@
+# 1.4.0
+- Switch to using `FMODAudioEngine::playEffect` instead of using raw FMOD for playing reactions
+- Remove preloading <c-a6a6a6>(should not be needed anymore thanks to the changes above!)</c>
+
 # 1.3.4
 - Fix memory leaks
 
