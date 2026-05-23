@@ -1,7 +1,6 @@
 name: Build Geode Mod
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - "**"
@@ -55,3 +54,50 @@ jobs:
         with:
           name: build-out
           path: ${{ steps.build.outputs.build-output }}
+
+  release:
+    if: contains(github.event.head_commit.message, '[release]')
+    needs: ['build', 'package']
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Get Version Stuff
+        id: version
+        run: |
+          MSG="${{ github.event.head_commit.message }}"
+          VERSION=$(echo "$MSG" | sed "s/\[release\]//g" | sed "s/[[:space:]]*$//")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag ${{ steps.version.outputs.version }}
+          git push origin ${{ steps.version.outputs.version }}
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-out
+          path: build/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}
+          draft: true
+          files: build/*
+          body: |
+            > *"God"
+            > Bible 1:23 NKJV*
+
+            Cool changelog here :)
