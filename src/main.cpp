@@ -70,7 +70,7 @@ class $modify(PLHook, PlayLayer) {
 			if (custom.isErr()) {
 				return Err("Could not get custom reactions: {}", custom.unwrapErr());
 			}
-			filePaths.push_back(custom.unwrap());
+			filePaths.push_back(std::move(custom).unwrap());
 
 			return Ok(filePaths[random::generate(0, filePaths.size())]);
 		} else if (reaction == "Custom") {
