@@ -25,6 +25,7 @@ The following reactions are included
 - Zoink's completion of [Acheron](https://youtu.be/sBKR6aUorzA)
 - totalgd's completion of [Unnerfed Sakupen Circles](https://youtu.be/TY3DB4M8tgA)
 - Vortrox's completion of [Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)
+- Vortrox's completion of [Yatagarasu](https://www.youtube.com/watch?v=-T10YVjL-Yk)
 
 ### Credits
 - sSevcon for the original mod idea (originally just the Npesta reaction)

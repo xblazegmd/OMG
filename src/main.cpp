@@ -108,7 +108,8 @@ class $modify(PLHook, PlayLayer) {
 			{"Tidal Wave (Zoink)", 							getNormalOrSwear("zoink", "swoink", "tw")},
 			{"Acheron (Zoink)",								getNormalOrSwear("zoink", "swoink", "acheron")},
 			{"Unnerfed Sakupen Circles (totalgd)", 			"totalgd-uskc.ogg"},
-			{"Time Extreme (Vortrox)", 						"vortrox-timeextreme.ogg"}
+			{"Time Extreme (Vortrox)", 						"vortrox-timeextreme.ogg"},
+			{"Yatagarasu (Vortrox)", 						"vortrox-yata.ogg"}
 		};
 	}
 
