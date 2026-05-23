@@ -24,6 +24,7 @@ The following reactions are included
 - Zoink's completion of [Tidal Wave](https://www.youtube.com/watch?v=9fsZ014qB3s)
 - Zoink's completion of [Acheron](https://youtu.be/sBKR6aUorzA)
 - totalgd's completion of [Unnerfed Sakupen Circles](https://youtu.be/TY3DB4M8tgA)
+- Vortrox's completion of [Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)
 
 ### Credits
 - sSevcon for the original mod idea (originally just the Npesta reaction)

@@ -1,5 +1,6 @@
 # OMG!
 ## 1.4.0
+- Add __Vortrox's__ completion of [Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)
 - Switch to using `FMODAudioEngine::playEffect` instead of using raw FMOD for playing reactions <c-a6a6a6>(should make the mod more efficient!)</c>
 - Remove preloading <c-a6a6a6>(should not be needed anymore thanks to the changes above!)</c>
 
