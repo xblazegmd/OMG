@@ -2,9 +2,10 @@
 ## 1.4.0
 - Add __Vortrox's__ completion of [Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)
 - Add __Vortrox's__ completion of [Yatagarasu](https://www.youtube.com/watch?v=-T10YVjL-Yk)
-- Add __Zoink's__ completion of [Boobawamba](https://www.youtube.com/watch?v=DXV7CVkos7I) <c-a6a6a6>(no uncensored version cuz I just couldn't find a way to download that, sry)</c>
-- Switch to using `FMODAudioEngine::playEffect` instead of using raw FMOD for playing reactions <c-a6a6a6>(should make the mod more efficient!)</c>
-- Remove preloading <c-a6a6a6>(should not be needed anymore thanks to the changes above!)</c>
+- Add __Zoink's__ completion of [Boobawamba](https://www.youtube.com/watch?v=DXV7CVkos7I)
+    - *<c-a6a6a6>no uncensored version cuz I just couldn't find a way to download that, sry</c>*
+- Switch to using `FMODAudioEngine::playEffect` instead of using raw FMOD for playing reactions
+- Remove preloading setting <c-a6a6a6>(should not be needed anymore thanks to the changes above!)</c>
 
 ## 1.3.4
 - Fix memory leaks
