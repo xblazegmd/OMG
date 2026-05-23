@@ -63,7 +63,7 @@ class $modify(PLHook, PlayLayer) {
 			filePaths.reserve(files.size() + 1);
 
 			for (const auto& [_, file] : files) {
-				filePaths.push_back(Mod::get()->getResourcesDir() / file);
+				filePaths.emplace_back(resources / file);
 			}
 
 			auto custom = getCustomReaction();
