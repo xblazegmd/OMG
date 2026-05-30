@@ -2,6 +2,7 @@
 ## 1.4.1
 - *As seen on YouTube!*
 - Add uncensored version of *Zoink's completion of [Boobawamba](https://www.youtube.com/watch?v=DXV7CVkos7I)* <c-a6a6a6>(tysm denkyuzu)</c>
+- BUT IS IT POSSIBLE WITH ACCURATE HITBOXES???????
 
 ## 1.4.0
 - Add __Vortrox's__ completion of [Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)
