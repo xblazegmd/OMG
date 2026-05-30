@@ -1,6 +1,8 @@
 # OMG!
 Play some of the most iconic reactions in GD when beating a level!
 
+*As seen on [YouTube!](https://www.youtube.com/shorts/_TaW2Ki4q1w)*
+
 The following reactions are included
 - __Npesta's__ completion of __[Kenos](https://www.youtube.com/watch?v=Bs1kVySdUtI)__
 - __Riot's__ completion of __[Bloodbath](https://youtu.be/IRmcul4QG0s)__
@@ -15,16 +17,11 @@ The following reactions are included
 - __nebnoob's__ completion of __[Unnerfed Zodiac](https://youtu.be/3mvddPaNklg)__
 - __Zoink's__ completion of __[Orbit](https://youtu.be/QKcv8DkNPd0)__
 - __Kingsammelot's__ completion of __[Artificial Ascent](https://www.youtube.com/watch?v=q8f7yzvM8EQ)__
-- __Npesta's__ completion of __[Deimos (EndLevel)](https://www.youtube.com/watch?v=FgxsNzQnF5o)__
-- __AeonAir's__ completion of __[Tartarus](https://www.youtube.com/watch?v=areGj_ppaYo)__
-- __Npesta's__ completion of __[WOW](https://www.youtube.com/watch?v=CbUVw7p0Ebg)__
 - __Kingsammelot's__ completion of __[Killbot](https://youtu.be/I1_yfoHOrbQ)__
-- __Zoink's__ completion of __[Tidal Wave](https://www.youtube.com/watch?v=9fsZ014qB3s)__
-- __Zoink's__ completion of __[Acheron](https://youtu.be/sBKR6aUorzA)__
-- __totalgd's__ completion of __[Unnerfed Sakupen Circles](https://youtu.be/TY3DB4M8tgA)__
 - __Vortrox's__ completion of __[Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)__
-- __Vortrox's__ completion of __[Yatagarasu](https://www.youtube.com/watch?v=-T10YVjL-Yk)__
-- __Zoink's__ completion of __[Boobawamba](https://www.youtube.com/watch?v=DXV7CVkos7I)__
+- __Vortrox's__ completion of __[Yatagarasu](https://www.youtube.com/watch?v=-T10YVjL-Yk)__...
+
+*...and so much more!*
 
 ### Credits
 - [sSevcon](user:24373814) for the original mod idea (originally just the Npesta reaction)

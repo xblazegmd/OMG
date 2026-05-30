@@ -1,4 +1,7 @@
 # OMG!
+## 1.4.1
+- *As seen on YouTube!*
+
 ## 1.4.0
 - Add __Vortrox's__ completion of [Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)
 - Add __Vortrox's__ completion of [Yatagarasu](https://www.youtube.com/watch?v=-T10YVjL-Yk)
