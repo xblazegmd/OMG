@@ -53,17 +53,20 @@ class $modify(PLHook, PlayLayer) {
 		auto resources = Mod::get()->getResourcesDir();
 		auto files = getFiles();
 
-		// BUT IS IT POSSIBLE WITH ACCURATE HITBOXES???????
-		if (random::chance(0.001)) {
-			return Ok(resources / "accurate-hitboxes.ogg");
-		}
 
 		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
 		if (reaction == "Random") {
+			// BUT IS IT POSSIBLE WITH ACCURATE HITBOXES???????
+			if (random::chance(0.001))
+				return Ok(resources / "accurate-hitboxes.ogg");
+
 			auto it = files.begin();
 			std::advance(it, random::generate(0, files.size()));
 			return Ok(resources / it->second);
 		} else if (reaction == "Random (With Custom)") {
+			if (random::chance(0.001))
+				return Ok(resources / "accurate-hitboxes.ogg");
+
 			std::vector<std::filesystem::path> filePaths;
 			filePaths.reserve(files.size() + 1);
 
