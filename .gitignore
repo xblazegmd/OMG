@@ -69,3 +69,4 @@ build-*/
 **.sh
 !new_reaction.sh
 **/temp
+compile_commands.json
