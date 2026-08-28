@@ -124,7 +124,8 @@ class $modify(PLHook, PlayLayer) {
 			{"Time Extreme (Vortrox)", 						"vortrox-timeextreme.ogg"},
 			{"Yatagarasu (Vortrox)", 						"vortrox-yata.ogg"},
 			{"Boobawamba (Zoink)", 							getNormalOrSwear("zoink", "swoink", "boobawamba")},
-			{"Thinking Space II (Wpopoff)",					"wpopoff-ts2.ogg"}
+			{"Thinking Space II (Wpopoff)",					"wpopoff-ts2.ogg"},
+			{"Zodiac (Zoink)",								"zoink-zodiac.ogg"}
 		};
 	}
 
