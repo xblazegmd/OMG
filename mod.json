@@ -115,9 +115,9 @@
 		},
 		"no-normal": {
 			"type": "bool",
-			"name": "No Reaction On Normal Mode",
-			"enable-if": "quick-enable",
-			"enable-if-description": "Please enable the mod :)",
+			"name": "No Reaction on Normal Mode",
+			"enable-if": "quick-enable && (!no-practice || !no-startpos)",
+			"enable-if-description": "Please enable the mod/Enable reactions on Practice/Startpos :)",
 			"description": "Do not play any reaction when playing on normal mode",
 			"default": false
 		},
@@ -131,7 +131,7 @@
 		},
 		"no-practice": {
 			"type": "bool",
-			"name": "No Reaction On Practice",
+			"name": "No Reaction on Practice",
 			"enable-if": "quick-enable",
 			"enable-if-description": "Please enable the mod :)",
 			"description": "Do not play any reaction when playing on practice mode",
@@ -141,7 +141,7 @@
 			"type": "bool",
 			"enable-if": "quick-enable",
 			"enable-if-description": "Please enable the mod :)",
-			"name": "No Reaction On Startpos",
+			"name": "No Reaction on Startpos",
 			"description": "Do not play any reaction when playing on a start position",
 			"default": true
 		}

@@ -3,6 +3,7 @@
 - Add __Wpopoff's__ completion of [Thinking Space II](https://www.youtube.com/watch?v=hJHiGeuahTI) (a swing and a mi-)
 - Add __Zoink's__ completion of [Zodiac](https://www.youtube.com/watch?v=v1Gj1iRg3cY)
 - Add __RaeveZ's__ completion of [Slaughterhouse](https://youtu.be/XOzY7Vs2xgA?si=IxB5pCtu4uDbvXUi) (VAMOS COLOMBIA)
+- Make it so you can't toggle *"No Reaction on Normal Mode"* if *"No Reaction on Practice Mode"* and *"No Reaction on Startpos"* are on (at that point just turn off the mod ToT)
 
 ## 1.4.1
 - *As seen on YouTube!*
