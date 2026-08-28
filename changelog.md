@@ -1,4 +1,7 @@
 # OMG!
+## 1.4.2
+- Add __Wpopoff's__ completion of [Thinking Space II](https://www.youtube.com/watch?v=hJHiGeuahTI) (a swing and a mi-)
+
 ## 1.4.1
 - *As seen on YouTube!*
 - Add uncensored version of *Zoink's completion of [Boobawamba](https://www.youtube.com/watch?v=DXV7CVkos7I)* <c-a6a6a6>(tysm denkyuzu)</c>

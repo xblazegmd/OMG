@@ -123,7 +123,8 @@ class $modify(PLHook, PlayLayer) {
 			{"Unnerfed Sakupen Circles (totalgd)", 			"totalgd-uskc.ogg"},
 			{"Time Extreme (Vortrox)", 						"vortrox-timeextreme.ogg"},
 			{"Yatagarasu (Vortrox)", 						"vortrox-yata.ogg"},
-			{"Boobawamba (Zoink)", 							getNormalOrSwear("zoink", "swoink", "boobawamba")}
+			{"Boobawamba (Zoink)", 							getNormalOrSwear("zoink", "swoink", "boobawamba")},
+			{"Thinking Space II (Wpopoff)",					"wpopoff-ts2.ogg"}
 		};
 	}
 
