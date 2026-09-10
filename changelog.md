@@ -1,4 +1,7 @@
 # OMG!
+## 1.4.3
+- Fix *Cuatrocientos' completion of Flamewall* not working
+
 ## 1.4.2
 - Add __Wpopoff's__ completion of [Thinking Space II](https://www.youtube.com/watch?v=hJHiGeuahTI) (a swing and a mi-)
 - Add __Zoink's__ completion of [Zodiac](https://www.youtube.com/watch?v=v1Gj1iRg3cY)

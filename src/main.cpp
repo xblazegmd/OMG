@@ -108,6 +108,7 @@ class $modify(PLHook, PlayLayer) {
 			{"Nhelv (Kingsammelot)", 						"kingsammelot-nhelv.ogg"},
 			{"Thinking Space II (Zoink)", 					"zoink-ts2.ogg"},
 			{"Slaugherhouse (SpaceUK's \"completion\")", 	getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse")},
+            {"Flamewall (Cuatrocientos)",                   "cuatrocientos-flamewall.ogg"},
 			{"Silent Clubstep (Doggie)", 					"doggie-silentclubstep.ogg"},
 			{"Unnerfed Sary Never Clear (Glow)", 			"glow-unsaryneverclear.ogg"},
 			{"Rupture (Cold)", 								"cold-rupture.ogg"},
