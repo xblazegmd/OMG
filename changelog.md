@@ -1,4 +1,7 @@
 # OMG!
+## 1.4.4
+- Add __Doggie's__ completion of [Grief](https://www.twitch.tv/doggie/clip/AliveCreativePuppyDatSheffy-2pH0LW9rnFllfF4i)
+
 ## 1.4.3
 - Fix *Cuatrocientos' completion of Flamewall* not working
 
