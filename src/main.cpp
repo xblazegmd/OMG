@@ -128,7 +128,7 @@ class $modify(PLHook, PlayLayer) {
 			{"Thinking Space II (Wpopoff)",					"wpopoff-ts2.ogg"},
 			{"Zodiac (Zoink)",								"zoink-zodiac.ogg"},
 			{"Slaugherhouse (RaeveZ)", 						"raevez-slaughterhouse.ogg"},
-            {"Grief (Doggie)"                               "doggie-grief.ogg"}
+            {"Grief (Doggie)",                               "doggie-grief.ogg"}
 		};
 	}
 
