@@ -7,6 +7,7 @@ The following reactions are included
 - __Npesta's__ completion of __[Kenos](https://www.youtube.com/watch?v=Bs1kVySdUtI)__
 - __Riot's__ completion of __[Bloodbath](https://youtu.be/IRmcul4QG0s)__
 - __Knobbelboy's__ completion of __[Bloodlust](https://youtu.be/5SzKetF2btw)__
+- __Doggie's__ completion of __[Grief](https://www.twitch.tv/doggie/clip/AliveCreativePuppyDatSheffy-2pH0LW9rnFllfF4i)__
 - __Kingsammelot's__ completion of __[Nhelv](https://youtu.be/DftuauLZ_Os)__
 - __Zoink's__ completion of __[Thinking Space II](https://youtu.be/CELNmHwln_c)__
 - __SpaceUK's__ "completion" of __[Slaughterhouse](https://youtu.be/CC7zfHByLSk)__
@@ -18,8 +19,7 @@ The following reactions are included
 - __Zoink's__ completion of __[Orbit](https://youtu.be/QKcv8DkNPd0)__
 - __Kingsammelot's__ completion of __[Artificial Ascent](https://www.youtube.com/watch?v=q8f7yzvM8EQ)__
 - __Kingsammelot's__ completion of __[Killbot](https://youtu.be/I1_yfoHOrbQ)__
-- __Vortrox's__ completion of __[Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)__
-- __Vortrox's__ completion of __[Yatagarasu](https://www.youtube.com/watch?v=-T10YVjL-Yk)__...
+- __Vortrox's__ completion of __[Time Extreme](https://www.youtube.com/watch?v=EOfp_nv11Rg)__...
 
 *...and so much more!*
 
