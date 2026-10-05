@@ -7,6 +7,7 @@ The following reactions are included
 - Npesta's completion of [Kenos](https://www.youtube.com/watch?v=Bs1kVySdUtI)
 - Riot's completion of [Bloodbath](https://youtu.be/IRmcul4QG0s)
 - Knobbelboy's completion of [Bloodlust](https://youtu.be/5SzKetF2btw)
+- Doggie's completion of [Grief](https://www.twitch.tv/doggie/clip/AliveCreativePuppyDatSheffy-2pH0LW9rnFllfF4i)
 - Kingsammelot's completion of [Nhelv](https://youtu.be/DftuauLZ_Os)
 - Zoink's completion of [Thinking Space II](https://youtu.be/CELNmHwln_c)
 - SpaceUK's "completion" of [Slaughterhouse](https://youtu.be/CC7zfHByLSk)
