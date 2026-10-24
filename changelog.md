@@ -1,7 +1,10 @@
 # OMG!
+## v1.5.0
+- Update to Geode v6
+- Switch to using `asp::fs` for file operations instead of `std::filesystem` <c-a6a6a6>(mainly because v6 now uses `asp::fs`)</c>
+
 ## 1.4.5
 - List *Doggie's completion of Grief* on about.md
-
 
 ## 1.4.4
 - Add __Doggie's__ completion of [Grief](https://www.twitch.tv/doggie/clip/AliveCreativePuppyDatSheffy-2pH0LW9rnFllfF4i)
