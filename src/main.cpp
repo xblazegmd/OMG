@@ -66,20 +66,14 @@ class $modify(PLHook, PlayLayer) {
 			if (random::chance(0.001))
 				return Ok(resources / "accurate-hitboxes.ogg");
 
-			std::vector<asp::fs::Path> filePaths;
-			filePaths.reserve(files.size() + 1);
+            auto idx = random::generate(0, files.size() + 1);
+            if (idx == files.size()) {
+                return getCustomReaction();
+            }
 
-			for (const auto& [_, file] : files) {
-				filePaths.emplace_back(resources / file);
-			}
-
-			auto custom = getCustomReaction();
-			if (custom.isErr()) {
-				return Err("Could not get custom reactions: {}", custom.unwrapErr());
-			}
-			filePaths.push_back(std::move(custom).unwrap());
-
-			return Ok(filePaths[random::generate(0, filePaths.size())]);
+            auto it = files.begin();
+            std::advance(it, idx);
+            return Ok(resources / it->second);
 		} else if (reaction == "Custom") {
 			return getCustomReaction();
 		} else if (files.contains(reaction)) {
