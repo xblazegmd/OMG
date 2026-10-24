@@ -51,7 +51,15 @@ class $modify(PLHook, PlayLayer) {
 
 	Result<asp::fs::Path> getReactionPath() {
 		auto resources = Mod::get()->getResourcesDir();
-		auto files = getFiles();
+		static const auto files = getFiles();
+        static const auto fileVector = [] {
+            std::vector<const std::string*> list;
+            list.reserve(files.size());
+            for (const auto& [_, file] : files) {
+                list.push_back(&file);
+            }
+            return list;
+        }();
 
 		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
 		if (reaction == "Random") {
@@ -59,9 +67,7 @@ class $modify(PLHook, PlayLayer) {
 			if (random::chance(0.001))
 				return Ok(resources / "accurate-hitboxes.ogg");
 
-			auto it = files.begin();
-			std::advance(it, random::generate(0, files.size()));
-			return Ok(resources / it->second);
+            return Ok(resources / *fileVector[random::generate(0, fileVector.size())]);
 		} else if (reaction == "Random (With Custom)") {
 			if (random::chance(0.001))
 				return Ok(resources / "accurate-hitboxes.ogg");
@@ -70,14 +76,11 @@ class $modify(PLHook, PlayLayer) {
             if (idx == files.size()) {
                 return getCustomReaction();
             }
-
-            auto it = files.begin();
-            std::advance(it, idx);
-            return Ok(resources / it->second);
+            return Ok(resources / *fileVector[idx]);
 		} else if (reaction == "Custom") {
 			return getCustomReaction();
-		} else if (files.contains(reaction)) {
-			return Ok(resources / files[reaction]);
+		} else if (auto it = files.find(reaction); it != files.end()) {
+			return Ok(resources / it->second);
 		}
 
 		// This should be unreachable so if we reach this, it's definitely a bug
