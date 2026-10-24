@@ -5,7 +5,7 @@
 #include <Geode/utils/StringMap.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 
-#include <filesystem>
+#include <asp/fs.hpp>
 #include <string>
 #include <vector>
 
@@ -39,7 +39,7 @@ class $modify(PLHook, PlayLayer) {
 		auto audioEngine = FMODAudioEngine::get();
 		audioEngine->m_globalChannel->setPaused(false);
 		audioEngine->playEffectAdvanced(
-			string::pathToString(std::move(reaction).unwrap()),
+			std::move(reaction).unwrap().string(),
 			1.f,
 			0, // idk what this is (I don't think anyone knows)
 			mod->getSettingValue<int64_t>("volume") / 100.f, // volume
@@ -49,10 +49,9 @@ class $modify(PLHook, PlayLayer) {
 		);
 	}
 
-	Result<std::filesystem::path> getReactionPath() {
+	Result<asp::fs::Path> getReactionPath() {
 		auto resources = Mod::get()->getResourcesDir();
 		auto files = getFiles();
-
 
 		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
 		if (reaction == "Random") {
@@ -67,7 +66,7 @@ class $modify(PLHook, PlayLayer) {
 			if (random::chance(0.001))
 				return Ok(resources / "accurate-hitboxes.ogg");
 
-			std::vector<std::filesystem::path> filePaths;
+			std::vector<asp::fs::Path> filePaths;
 			filePaths.reserve(files.size() + 1);
 
 			for (const auto& [_, file] : files) {
@@ -128,17 +127,15 @@ class $modify(PLHook, PlayLayer) {
 			{"Thinking Space II (Wpopoff)",					"wpopoff-ts2.ogg"},
 			{"Zodiac (Zoink)",								"zoink-zodiac.ogg"},
 			{"Slaugherhouse (RaeveZ)", 						"raevez-slaughterhouse.ogg"},
-            {"Grief (Doggie)",                               "doggie-grief.ogg"}
+            {"Grief (Doggie)",                              "doggie-grief.ogg"}
 		};
 	}
 
-	Result<std::filesystem::path> getCustomReaction() const {
-		auto reaction = Mod::get()->getSettingValue<std::filesystem::path>("custom-reaction");
-		std::error_code ec;
-		auto exists = std::filesystem::exists(reaction, ec);
-		if (ec || !exists) {
+	Result<asp::fs::Path> getCustomReaction() const {
+		auto reaction = Mod::get()->getSettingValue<asp::fs::Path>("custom-reaction");
+        if (!reaction.exists()) {
 			return Err("The custom reaction's file was not found");
-		}
+        }
 		return Ok(reaction);
 	}
 };
