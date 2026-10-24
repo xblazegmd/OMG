@@ -7,11 +7,55 @@
 
 #include <asp/fs.hpp>
 #include <string>
-#include <vector>
 
 using namespace geode::prelude;
 
 class $modify(PLHook, PlayLayer) {
+    struct Fields {
+        utils::StringMap<std::string> m_files;
+        std::vector<const std::string*> m_filesVector; // For easier/faster lookups by index
+    };
+
+    bool init (GJGameLevel* level, bool dontCreateObjects) {
+        if (!PlayLayer::init(level, dontCreateObjects)) return false;
+
+        m_fields->m_files = {
+			{"Kenos (Npesta)", 								"npesta-kenos.ogg"},
+			{"Bloodbath (Riot)", 							"riot-bloodbath.ogg"},
+			{"Bloodlust (Knobbelboy)", 						"knobbelboy-bloodlust.ogg"},
+			{"Nhelv (Kingsammelot)", 						"kingsammelot-nhelv.ogg"},
+			{"Thinking Space II (Zoink)", 					"zoink-ts2.ogg"},
+			{"Slaugherhouse (SpaceUK's \"completion\")", 	getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse")},
+            {"Flamewall (Cuatrocientos)",                   "cuatrocientos-flamewall.ogg"},
+			{"Silent Clubstep (Doggie)", 					"doggie-silentclubstep.ogg"},
+			{"Unnerfed Sary Never Clear (Glow)", 			"glow-unsaryneverclear.ogg"},
+			{"Rupture (Cold)", 								"cold-rupture.ogg"},
+			{"Unnerfed Zodiac (nebnoob)", 					"nebnoob-unzodiac.ogg"},
+			{"Orbit (Zoink)", 								getNormalOrSwear("zoink", "swoink", "orbit")},
+			{"Artificial Ascent (Kingsammelot)", 			"kingsammelot-artificialascent.ogg"},
+			{"Deimos (Npesta)", 							getNormalOrSwear("npesta", "swearpesta", "deimos")},
+			{"Tartarus (AeonAir)", 							"aeonair-tartarus.ogg"},
+			{"WOW (Npesta)", 								"npesta-wow.ogg"},
+			{"Killbot (Kingsammelot)", 						"kingsammelot-killbot.ogg"},
+			{"Tidal Wave (Zoink)", 							getNormalOrSwear("zoink", "swoink", "tw")},
+			{"Acheron (Zoink)",								getNormalOrSwear("zoink", "swoink", "acheron")},
+			{"Unnerfed Sakupen Circles (totalgd)", 			"totalgd-uskc.ogg"},
+			{"Time Extreme (Vortrox)", 						"vortrox-timeextreme.ogg"},
+			{"Yatagarasu (Vortrox)", 						"vortrox-yata.ogg"},
+			{"Boobawamba (Zoink)", 							getNormalOrSwear("zoink", "swoink", "boobawamba")},
+			{"Thinking Space II (Wpopoff)",					"wpopoff-ts2.ogg"},
+			{"Zodiac (Zoink)",								"zoink-zodiac.ogg"},
+			{"Slaugherhouse (RaeveZ)", 						"raevez-slaughterhouse.ogg"},
+            {"Grief (Doggie)",                              "doggie-grief.ogg"}
+		};
+        m_fields->m_filesVector.reserve(m_fields->m_files.size());
+        for (const auto& [_, reaction] : m_fields->m_files) {
+            m_fields->m_filesVector.push_back(&reaction);
+        }
+
+        return true;
+    }
+
 	void playEndAnimationToPos(CCPoint position) {
 		PlayLayer::playEndAnimationToPos(position);
 		playSound();
@@ -51,7 +95,7 @@ class $modify(PLHook, PlayLayer) {
 
 	Result<asp::fs::Path> getReactionPath() {
 		auto resources = Mod::get()->getResourcesDir();
-		auto files = getFiles();
+        auto f = m_fields.self();
 
 		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
 		if (reaction == "Random") {
@@ -59,25 +103,22 @@ class $modify(PLHook, PlayLayer) {
 			if (random::chance(0.001))
 				return Ok(resources / "accurate-hitboxes.ogg");
 
-			auto it = files.begin();
-			std::advance(it, random::generate(0, files.size()));
-			return Ok(resources / it->second);
+            int idx = random::generate(0, f->m_filesVector.size());
+            return Ok(resources / *f->m_filesVector[idx]);
 		} else if (reaction == "Random (With Custom)") {
 			if (random::chance(0.001))
 				return Ok(resources / "accurate-hitboxes.ogg");
 
-            auto idx = random::generate(0, files.size() + 1);
-            if (idx == files.size()) {
+            auto idx = random::generate(0, f->m_filesVector.size() + 1);
+            if (idx == f->m_filesVector.size()) {
                 return getCustomReaction();
             }
 
-            auto it = files.begin();
-            std::advance(it, idx);
-            return Ok(resources / it->second);
+            return Ok(resources / *f->m_filesVector[idx]);
 		} else if (reaction == "Custom") {
 			return getCustomReaction();
-		} else if (files.contains(reaction)) {
-			return Ok(resources / files[reaction]);
+		} else if (auto it = f->m_files.find(reaction); it != f->m_files.end()) {
+			return Ok(resources / it->second);
 		}
 
 		// This should be unreachable so if we reach this, it's definitely a bug
@@ -91,38 +132,6 @@ class $modify(PLHook, PlayLayer) {
 		const std::string& level
 	) {
 		return fmt::format("{}-{}.ogg", Mod::get()->getSettingValue<bool>("swearuk") ? swear : normal, level);
-	}
-
-	inline utils::StringMap<std::string> getFiles() {
-		return {
-			{"Kenos (Npesta)", 								"npesta-kenos.ogg"},
-			{"Bloodbath (Riot)", 							"riot-bloodbath.ogg"},
-			{"Bloodlust (Knobbelboy)", 						"knobbelboy-bloodlust.ogg"},
-			{"Nhelv (Kingsammelot)", 						"kingsammelot-nhelv.ogg"},
-			{"Thinking Space II (Zoink)", 					"zoink-ts2.ogg"},
-			{"Slaugherhouse (SpaceUK's \"completion\")", 	getNormalOrSwear("spaceuk", "swearuk", "slaughterhouse")},
-            {"Flamewall (Cuatrocientos)",                   "cuatrocientos-flamewall.ogg"},
-			{"Silent Clubstep (Doggie)", 					"doggie-silentclubstep.ogg"},
-			{"Unnerfed Sary Never Clear (Glow)", 			"glow-unsaryneverclear.ogg"},
-			{"Rupture (Cold)", 								"cold-rupture.ogg"},
-			{"Unnerfed Zodiac (nebnoob)", 					"nebnoob-unzodiac.ogg"},
-			{"Orbit (Zoink)", 								getNormalOrSwear("zoink", "swoink", "orbit")},
-			{"Artificial Ascent (Kingsammelot)", 			"kingsammelot-artificialascent.ogg"},
-			{"Deimos (Npesta)", 							getNormalOrSwear("npesta", "swearpesta", "deimos")},
-			{"Tartarus (AeonAir)", 							"aeonair-tartarus.ogg"},
-			{"WOW (Npesta)", 								"npesta-wow.ogg"},
-			{"Killbot (Kingsammelot)", 						"kingsammelot-killbot.ogg"},
-			{"Tidal Wave (Zoink)", 							getNormalOrSwear("zoink", "swoink", "tw")},
-			{"Acheron (Zoink)",								getNormalOrSwear("zoink", "swoink", "acheron")},
-			{"Unnerfed Sakupen Circles (totalgd)", 			"totalgd-uskc.ogg"},
-			{"Time Extreme (Vortrox)", 						"vortrox-timeextreme.ogg"},
-			{"Yatagarasu (Vortrox)", 						"vortrox-yata.ogg"},
-			{"Boobawamba (Zoink)", 							getNormalOrSwear("zoink", "swoink", "boobawamba")},
-			{"Thinking Space II (Wpopoff)",					"wpopoff-ts2.ogg"},
-			{"Zodiac (Zoink)",								"zoink-zodiac.ogg"},
-			{"Slaugherhouse (RaeveZ)", 						"raevez-slaughterhouse.ogg"},
-            {"Grief (Doggie)",                              "doggie-grief.ogg"}
-		};
 	}
 
 	Result<asp::fs::Path> getCustomReaction() const {
