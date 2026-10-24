@@ -11,9 +11,6 @@
 	"version": "v1.4.5",
 	"developer": "XblazeGMD",
 	"description": "npesta be like",
-	"dependencies": {
-		"geode.node-ids": ">=v1.20.0"
-	},
 	"tags": ["joke", "offline", "interface"],
 	"links": {
 		"homepage": "https://xblaze.netlify.app",
