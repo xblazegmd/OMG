@@ -1,6 +1,8 @@
 # OMG!
 ## v1.5.0
 - Update to Geode v6
+- Add __Wpopoff's__ completion of [Grief](https://www.youtube.com/watch?v=5SV7VnDdUTk)
+- Add __Zoink's__ completion of [Grief](https://www.youtube.com/live/u9VhabpSs44?t=5362)
 - Switch to using `asp::fs` for file operations instead of `std::filesystem` <c-a6a6a6>(mainly because v6 now uses `asp::fs`)</c>
 - Optimize the mods code (now loading reactions should be ~80% faster)
 

@@ -46,7 +46,9 @@ class $modify(PLHook, PlayLayer) {
 			{"Thinking Space II (Wpopoff)",					"wpopoff-ts2.ogg"},
 			{"Zodiac (Zoink)",								"zoink-zodiac.ogg"},
 			{"Slaugherhouse (RaeveZ)", 						"raevez-slaughterhouse.ogg"},
-            {"Grief (Doggie)",                              "doggie-grief.ogg"}
+            {"Grief (Doggie)",                              "doggie-grief.ogg"},
+            {"Grief (Wpopoff)",                             "wpopoff-grief.ogg"},
+            {"Grief (Zoink)",                               "zoink-grief.ogg"}
 		};
         m_fields->m_filesVector.reserve(m_fields->m_files.size());
         for (const auto& [_, reaction] : m_fields->m_files) {
