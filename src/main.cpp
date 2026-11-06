@@ -48,7 +48,8 @@ class $modify(PLHook, PlayLayer) {
 			{"Slaugherhouse (RaeveZ)", 						"raevez-slaughterhouse.ogg"},
             {"Grief (Doggie)",                              "doggie-grief.ogg"},
             {"Grief (Wpopoff)",                             "wpopoff-grief.ogg"},
-            {"Grief (Zoink)",                               "zoink-grief.ogg"}
+            {"Grief (Zoink)",                               "zoink-grief.ogg"},
+            {"Artemis 13 (Zoink)",                          "zoink-artemis13.ogg"}
 		};
         m_fields->m_filesVector.reserve(m_fields->m_files.size());
         for (const auto& [_, reaction] : m_fields->m_files) {
