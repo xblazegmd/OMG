@@ -98,7 +98,6 @@ class $modify(PLHook, PlayLayer) {
 
 	Result<asp::fs::Path> getReactionPath() {
 		auto resources = Mod::get()->getResourcesDir();
-        auto f = m_fields.self();
 
 		std::string reaction = Mod::get()->getSettingValue<std::string>("reaction");
 		if (reaction == "Random") {
@@ -106,21 +105,21 @@ class $modify(PLHook, PlayLayer) {
 			if (random::chance(0.001))
 				return Ok(resources / "accurate-hitboxes.ogg");
 
-            int idx = random::generate(0, f->m_filesVector.size());
-            return Ok(resources / *f->m_filesVector[idx]);
+            int idx = random::generate(0, m_fields->m_filesVector.size());
+            return Ok(resources / *m_fields->m_filesVector[idx]);
 		} else if (reaction == "Random (With Custom)") {
 			if (random::chance(0.001))
 				return Ok(resources / "accurate-hitboxes.ogg");
 
-            auto idx = random::generate(0, f->m_filesVector.size() + 1);
-            if (idx == f->m_filesVector.size()) {
+            auto idx = random::generate(0, m_fields->m_filesVector.size() + 1);
+            if (idx == m_fields->m_filesVector.size()) {
                 return getCustomReaction();
             }
 
-            return Ok(resources / *f->m_filesVector[idx]);
+            return Ok(resources / *m_fields->m_filesVector[idx]);
 		} else if (reaction == "Custom") {
 			return getCustomReaction();
-		} else if (auto it = f->m_files.find(reaction); it != f->m_files.end()) {
+		} else if (auto it = m_fields->m_files.find(reaction); it != m_fields->m_files.end()) {
 			return Ok(resources / it->second);
 		}
 
