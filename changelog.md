@@ -4,6 +4,7 @@
 - Add __Wpopoff's__ completion of [Grief](https://www.youtube.com/watch?v=5SV7VnDdUTk)
 - Add __Zoink's__ completion of [Grief](https://www.youtube.com/live/u9VhabpSs44?t=5362)
 - Add __Zoink's__ completion of [Artemis 13](https://www.youtube.com/watch?v=FgjOM0ef1N8)
+- Add __Wpopoff's__ completion of [Society](https://www.youtube.com/watch?v=H1KvNOL5aeI) <!-- TODO: Fix this link -->
 - Switch to using `asp::fs` for file operations instead of `std::filesystem` <c-a6a6a6>(mainly because v6 now uses `asp::fs`)</c>
 - Optimize the mods code
 
