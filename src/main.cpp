@@ -53,7 +53,7 @@ class $modify(PLHook, PlayLayer) {
             {"Society (Wpopoff)",                           "wpopoff-society.ogg"},
             {"Azure Flare (Diamond)",                       "diamond-azure.ogg"},
             {"Firework (Trick)",                            "trick-firework.ogg"},
-            {"Polterghast (Apocalyptic Trilogy)",           "polterghast-apt.ogg"},
+            {"Apocalyptic Trilogy (Polterghast)",           "polterghast-apt.ogg"},
             {"Cycles X (Vortrox)",                          "vortrox-cyclesx.ogg"},
             {"Erebus (Vortrox)",                            "vortrox-erebus.ogg"},
             {"Omicron (Kingsammelot)",                      "kingsammelot-omicron.ogg"}
