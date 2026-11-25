@@ -56,6 +56,7 @@ class $modify(PLHook, PlayLayer) {
             {"Polterghast (Apocalyptic Trilogy)",           "polterghast-apt.ogg"},
             {"Cycles X (Vortrox)",                          "vortrox-cyclesx.ogg"},
             {"Erebus (Vortrox)",                            "vortrox-erebus.ogg"},
+            {"Omicron (Kingsammelot)",                      "kingsammelot-omicron.ogg"}
 		};
         m_fields->m_filesVector.reserve(m_fields->m_files.size());
         for (const auto& [_, reaction] : m_fields->m_files) {
