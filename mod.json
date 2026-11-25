@@ -38,7 +38,7 @@
 			"enable-if-description": "Please enable the mod :)",
 			"name": "Volume",
 			"description": "The volume for the reaction\n\n<cr>The reactions are very loud, so be careful!</c>",
-			"default": 25,
+			"default": 50,
 			"min": 0,
 			"max": 100,
 			"control": {
