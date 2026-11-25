@@ -8,6 +8,8 @@
 - Add __Diamond's__ completion of [Azure Flare](https://www.youtube.com/watch?v=r6hQ5Se2i8U)
 - Add __Trick's__ completion of [Firework](https://www.youtube.com/watch?v=QBe5x2o9v2w)
 - Add __Polterghast's__ completion of [Apocalyptic Trilogy](https://www.youtube.com/watch?v=RUBbpsTR5eU)
+- Add __Vortrox's__ completion of [Cycles X](https://www.youtube.com/watch?v=Cq1ysv-7-w0)
+- Add __Vortrox's__ completion of [Erebus](https://www.youtube.com/watch?v=kpmMBNufgS4)
 - Switch to using `asp::fs` for file operations instead of `std::filesystem` <c-a6a6a6>(mainly because v6 now uses `asp::fs`)</c>
 - Optimize the mods code
 
