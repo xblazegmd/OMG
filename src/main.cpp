@@ -47,7 +47,7 @@ class $modify(PLHook, PlayLayer) {
 			{"Zodiac (Zoink)",								"zoink-zodiac.ogg"},
 			{"Slaugherhouse (RaeveZ)", 						"raevez-slaughterhouse.ogg"},
             {"Grief (Doggie)",                              "doggie-grief.ogg"},
-            {"Grief (Wpopoff)",                             "wpopoff-grief.ogg"},
+            {"Grief (Wpopoff)",                             getNormalOrSwear("wpopoff", "wswearoff", "grief")},
             {"Grief (Zoink)",                               getNormalOrSwear("zoink", "swoink", "grief")},
             {"Artemis 13 (Zoink)",                          getNormalOrSwear("zoink", "swoink", "artemis13")},
             {"Society (Wpopoff)",                           "wpopoff-society.ogg"},
